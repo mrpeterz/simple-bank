@@ -11,6 +11,7 @@
         "doctrine/annotations": "^1.0",
         "doctrine/doctrine-bundle": "^2.3",
         "doctrine/doctrine-migrations-bundle": "^3.1",
+        "doctrine/migrations": "^3.1",
         "doctrine/orm": "^2.8",
         "phpdocumentor/reflection-docblock": "^5.2",
         "sensio/framework-extra-bundle": "^5.1",
@@ -61,12 +62,12 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "SimpleBank\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "App\\Tests\\": "tests/"
+            "SimpleBank\\Tests\\": "tests/"
         }
     },
     "replace": {
