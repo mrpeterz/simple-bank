@@ -47,7 +47,7 @@ class BankBranchRepository implements BankBranchRepositoryInterface
                 new BankBranchId($rst['id']),
                 $rst['name'],
                 $rst['location']
-        );
+            );
     }
 
     public function all(): ?array

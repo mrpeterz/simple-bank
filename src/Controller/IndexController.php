@@ -2,37 +2,24 @@
 
 namespace SimpleBank\Controller;
 
-use SimpleBank\Domain\Model\BankBranch\BankBranch;
-use SimpleBank\Domain\Model\BankBranch\BankBranchId;
-use SimpleBank\Domain\Model\BankBranch\BankBranchRepositoryInterface;
+use SimpleBank\Application\BankBranch\BankBranchFinder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 
 class IndexController extends AbstractController
 {
-    private BankBranchRepositoryInterface $bankBranchRepository;
+    private BankBranchFinder $bankBranchFinder;
 
-    public function __construct(BankBranchRepositoryInterface $bankBranchRepository)
+    public function __construct(BankBranchFinder $bankBranchFinder)
     {
-        $this->bankBranchRepository = $bankBranchRepository;
+        $this->bankBranchFinder = $bankBranchFinder;
     }
 
-    public function index(Request $request): JsonResponse
+    public function index()
     {
-        $bankBranch = new BankBranch(
-            new BankBranchId(),
-            'Intesa San Paolo',
-            'Via dei morti di fame 10, Milano' . rand(0,1000)
-        );
+        $bankBranch = $this->bankBranchFinder->listBankBranches();
 
-        $this->bankBranchRepository->save($bankBranch);
-
-        $branchId = new BankBranchId('d47b1933-1eab-4117-8c27-951542d6a73c');
-        $bankBranchB = $this->bankBranchRepository->search($branchId);
-
-        $data = $this->bankBranchRepository->all();
-
-        return $this->json(json_encode($data), 200);
+        return $this->render('bank_branch\bank_branches.html.twig', [
+            'bank_branches' => $bankBranch
+        ]);
     }
 }
