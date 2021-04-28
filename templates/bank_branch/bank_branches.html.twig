@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Bank Branches</title>
-
+    <h1>Bank Branches</h1>
+    <ul>
+        {% for bankBranch in bankBranches %}
+            <li>{{ bankBranch.id|e }}{{ bankBranch.name|e }}{{ bankBranch.location|e }}</li>
+        {% endfor %}
+    </ul>
 </head>
 <body>
 
