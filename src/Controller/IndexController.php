@@ -28,6 +28,11 @@ class IndexController extends AbstractController
 
         $this->bankBranchRepository->save($bankBranch);
 
-        return $this->json("[{'ciao': 'bau'}]", 200);
+        $branchId = new BankBranchId('d47b1933-1eab-4117-8c27-951542d6a73c');
+        $bankBranchB = $this->bankBranchRepository->search($branchId);
+
+        $data = $this->bankBranchRepository->all();
+
+        return $this->json(json_encode($data), 200);
     }
 }

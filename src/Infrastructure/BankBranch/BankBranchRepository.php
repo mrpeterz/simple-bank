@@ -19,15 +19,45 @@ class BankBranchRepository implements BankBranchRepositoryInterface
 
     public function save(BankBranch $bankBranch): bool
     {
-        $stm = $this->connection->prepare("INSERT INTO bank_branches VALUES(?,?,?)");
-        $stm->bindValue(1, $bankBranch->getId());
-        $stm->bindValue(2, $bankBranch->getName());
-        $stm->bindValue(3, $bankBranch->getLocation());
+        $stm =
+            $this
+                ->connection
+                ->prepare("INSERT INTO bank_branches VALUES(?,?,?)");
+
+        $stm->bindValue(1, $bankBranch->id());
+        $stm->bindValue(2, $bankBranch->name());
+        $stm->bindValue(3, $bankBranch->location());
+
         return $stm->execute();
     }
 
     public function search(BankBranchId $bankBranchId): ?BankBranch
     {
-        // TODO: Implement search() method.
+        $rst =
+            $this
+                ->connection
+                ->fetchAssociative("SELECT * FROM bank_branches WHERE id = ?", [$bankBranchId->id()]);
+
+        if (!$rst) {
+            return null;
+        }
+
+        return
+            new BankBranch(
+                new BankBranchId($rst['id']),
+                $rst['name'],
+                $rst['location']
+        );
+    }
+
+    public function all(): ?array
+    {
+        $rst =  $this->connection->fetchAllAssociative("SELECT * FROM bank_branches");
+
+        if (!$rst) {
+            return null;
+        }
+
+        return $rst;
     }
 }

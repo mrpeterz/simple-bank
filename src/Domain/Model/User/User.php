@@ -34,4 +34,14 @@ class User
     {
         return $this->bankBranchId;
     }
+
+    public function toArray()
+    {
+        return
+            [
+                'id' => (string)$this->id(),
+                'name' => (string)$this->name(),
+                'branch_id' => (string)$this->bankBranchId()
+            ];
+    }
 }

@@ -18,18 +18,28 @@ class BankBranch
         $this->location = $location;
     }
 
-    public function getId(): BankBranchId
+    public function id(): BankBranchId
     {
         return $this->id;
     }
 
-    public function getName(): string
+    public function name(): string
     {
         return $this->name;
     }
 
-    public function getLocation(): string
+    public function location(): string
     {
         return $this->location;
+    }
+
+    public function toArray()
+    {
+        return
+            [
+                'id' => (string)$this->id(),
+                'name' => (string)$this->name(),
+                'location' => (string)$this->location()
+            ];
     }
 }
