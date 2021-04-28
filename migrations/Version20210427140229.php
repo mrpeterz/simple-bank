@@ -18,12 +18,15 @@ final class Version20210427140229 extends AbstractMigration
     {
         $this->addSql('
             CREATE TABLE users (
-                id VARCHAR(255) NOT NULL, 
-                name VARCHAR(50) NOT NULL, 
-                PRIMARY KEY(id)
-            ) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB
-        ');
-
+                       id VARCHAR(255) NOT NULL,
+                       name VARCHAR(50) NOT NULL,
+                       bankBranchId VARCHAR(255),
+                       PRIMARY KEY(id),
+                       INDEX ix_users_bank_branch_id(bankBranchId),
+                       CONSTRAINT fk_users_bank_branches_branch_id FOREIGN KEY (bankBranchId)
+                           REFERENCES bank_branches(id)
+                           ON DELETE CASCADE
+            ) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB;        ');
     }
 
     public function down(Schema $schema): void
