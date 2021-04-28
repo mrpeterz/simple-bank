@@ -3,20 +3,30 @@
 namespace SimpleBank\Domain\Model\User;
 
 use Ramsey\Uuid\Uuid;
-use Ramsey\Uuid\UuidInterface;
 
 class UserId
 {
-    private UuidInterface $userId;
+    private string $id;
 
-    public function __construct(string $userId)
+    public function __construct(string $id = null)
     {
-        $userId = Uuid::fromString($userId);
-        $this->userId = $userId;
+        $this->id = null === $id
+            ? Uuid::uuid4()->toString() :
+            $id;
     }
 
-    public function toString(): string
+    public function id(): string
     {
-        return $this->userId->toString();
+        return $this->id;
+    }
+
+    public function equals(UserId $userId): bool
+    {
+        return $this->id() === $userId->id();
+    }
+
+    public function __toString(): string
+    {
+        return $this->id();
     }
 }

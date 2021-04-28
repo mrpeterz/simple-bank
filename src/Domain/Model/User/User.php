@@ -8,16 +8,16 @@ class User
 {
     private UserId $id;
     private string $name;
-    private BankBranchId $branchId;
+    private BankBranchId $bankBranchId;
 
     public function __construct(
       UserId $id,
       string $name,
-      BankBranchId $branchId
+      BankBranchId $bankBranchId
     ) {
         $this->id = $id;
         $this->name = $name;
-        $this->branchId = $branchId;
+        $this->bankBranchId = $bankBranchId;
     }
 
     public function id(): UserId
@@ -30,8 +30,8 @@ class User
         return $this->name;
     }
 
-    public function branchId(): BankBranchId
+    public function bankBranchId(): BankBranchId
     {
-        return $this->branchId;
+        return $this->bankBranchId;
     }
 }

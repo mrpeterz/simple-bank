@@ -3,20 +3,30 @@
 namespace SimpleBank\Domain\Model\BankBranch;
 
 use Ramsey\Uuid\Uuid;
-use Ramsey\Uuid\UuidInterface;
 
 class BankBranchId
 {
-    private UuidInterface $branchId;
+    private string $id;
 
-    public function __construct(string $branchId)
+    public function __construct(string $id = null)
     {
-        $branchId = Uuid::fromString($branchId);
-        $this->branchId = $branchId;
+        $this->id = null === $id
+            ? Uuid::uuid4()->toString() :
+            $id;
     }
 
-    public function toString(): string
+    public function id(): string
     {
-        return $this->branchId->toString();
+        return $this->id;
+    }
+
+    public function equals(BankBranchId $bankBranchId): bool
+    {
+        return $this->id() === $bankBranchId->id();
+    }
+
+    public function __toString(): string
+    {
+        return $this->id();
     }
 }
