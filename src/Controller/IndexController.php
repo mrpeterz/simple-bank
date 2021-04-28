@@ -18,6 +18,8 @@ class IndexController extends AbstractController
 
     public function index(Request $request): JsonResponse
     {
+
+
         return $this->json("[{'ciao': 'bau'}]", 200);
     }
 }
