@@ -4,11 +4,21 @@
     <meta charset="UTF-8">
     <title>Bank Branches</title>
     <h1>Bank Branches</h1>
-    <ul>
+    <table>
+        <tr>
+            <td>id</td>
+            <td>name</td>
+            <td>location</td>
+            <td>option</td>
+        </tr>
         {% for bankBranch in bankBranches %}
-            <li>{{ bankBranch.name|e }} - {{ bankBranch.location|e }} ({{ bankBranch.id|e }})</li>
+            <tr>
+                <td>{{ bankBranch.id }}</td>
+                <td>{{ bankBranch.name }}</td>
+                <td>{{ bankBranch.location }}</td>
+            </tr>
         {% endfor %}
-    </ul>
+    </table>
 </head>
 <body>
 
