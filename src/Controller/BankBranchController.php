@@ -4,15 +4,21 @@ namespace SimpleBank\Controller;
 
 use SimpleBank\Application\BankBranch\BankBranchFinder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 
-class IndexController extends AbstractController
+class BankBranchController extends AbstractController
 {
-    public function index(BankBranchFinder $bankBranchFinder)
+    public function show(BankBranchFinder $bankBranchFinder): Response
     {
         $bankBranches = $bankBranchFinder->listBankBranches();
 
         return $this->render('bank_branch\bank_branches.html.twig', [
             'bankBranches' => $bankBranches
         ]);
+    }
+
+    public function add()
+    {
+
     }
 }

@@ -1,6 +1,8 @@
 #index:
 #    path: /
 #    controller: SimpleBank\Controller\DefaultController::index
-index:
+bank_branch:
   path: /
-  controller: SimpleBank\Controller\IndexController::index
+  controller: SimpleBank\Controller\BankBranchController::show
+
+
