@@ -33,7 +33,7 @@ class BankBranch
         return $this->location;
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return
             [
