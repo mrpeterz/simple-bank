@@ -2,7 +2,7 @@
 
 namespace SimpleBank\Infrastructure\BankBranch;
 
-use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Driver\Connection;
 use SimpleBank\Domain\Model\BankBranch\BankBranch;
 use SimpleBank\Domain\Model\BankBranch\BankBranchId;
 use SimpleBank\Domain\Model\BankBranch\BankBranchRepositoryInterface;

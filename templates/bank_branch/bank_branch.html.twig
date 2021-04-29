@@ -2,23 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Bank Branches</title>
-    <h2>Bank Branches</h2>
+    <title>Simple Bank</title>
 </head>
 <body>
 <table>
     <tr>
-        <td>id</td>
         <td>name</td>
         <td>location</td>
         <td>option</td>
     </tr>
     {% for bankBranch in bankBranches %}
         <tr>
-            <td>{{ bankBranch.id }}</td>
             <td>{{ bankBranch.name }}</td>
             <td>{{ bankBranch.location }}</td>
-            <td><a href="">Test</a></td>
+            <td><a href="user/{{bankBranch.id}}">Add User</a></td>
         </tr>
     {% endfor %}
 </table>

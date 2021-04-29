@@ -1,8 +1,7 @@
-#index:
-#    path: /
-#    controller: SimpleBank\Controller\DefaultController::index
-bank_branch:
+index:
   path: /
   controller: SimpleBank\Controller\BankBranchController::show
 
-
+user:
+  path: /user/{bankBranchId}
+  controller: SimpleBank\Controller\UserController::add

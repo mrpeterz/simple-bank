@@ -12,13 +12,8 @@ class BankBranchController extends AbstractController
     {
         $bankBranches = $bankBranchFinder->listBankBranches();
 
-        return $this->render('bank_branch\bank_branches.html.twig', [
+        return $this->render('bank_branch\bank_branch.html.twig', [
             'bankBranches' => $bankBranches
         ]);
-    }
-
-    public function add()
-    {
-
     }
 }
