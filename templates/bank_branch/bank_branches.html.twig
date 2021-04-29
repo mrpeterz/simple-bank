@@ -6,7 +6,7 @@
     <h1>Bank Branches</h1>
     <ul>
         {% for bankBranch in bankBranches %}
-            <li>{{ bankBranch.id|e }}{{ bankBranch.name|e }}{{ bankBranch.location|e }}</li>
+            <li>{{ bankBranch.name|e }} - {{ bankBranch.location|e }} ({{ bankBranch.id|e }})</li>
         {% endfor %}
     </ul>
 </head>
