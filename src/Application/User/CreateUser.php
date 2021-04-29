@@ -16,6 +16,6 @@ class CreateUser
 
     public function save(User $user): bool
     {
-        $this->userRepository->save($user);
+        return $this->userRepository->save($user);
     }
 }
