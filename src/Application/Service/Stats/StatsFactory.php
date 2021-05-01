@@ -17,4 +17,9 @@ class StatsFactory
     {
         return $this->userBalanceRepository->searchByHighestBalance();
     }
+
+    public function topBankBranches(): ?array
+    {
+        return $this->userBalanceRepository->searchByTopBankBranches();
+    }
 }

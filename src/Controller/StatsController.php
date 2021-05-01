@@ -11,9 +11,11 @@ class StatsController extends AbstractController
     public function stats(StatsFactory $statsFactory): Response
     {
         $highestBalances = $statsFactory->highestBalances();
+        $topBankBranches = $statsFactory->topBankBranches();
 
         return $this->render('bank_branch\bank_branches_stats.html.twig', [
-            'highestBalances' => $highestBalances
+            'highestBalances' => $highestBalances,
+            'topBankBranches' => $topBankBranches
         ]);
     }
 }

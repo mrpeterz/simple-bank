@@ -21,6 +21,7 @@
         <li><a href="/stats">Stats Bank Branches</a></li>
     </ul>
     <table>
+        <caption style="text-align:left">Highest Balances</caption>
         <tr>
             <td>name</td>
             <td>location</td>
@@ -31,6 +32,21 @@
                 <td>{{ highestBalance.bank_branch_name }}</td>
                 <td>{{ highestBalance.bank_branch_location }}</td>
                 <td>{{ highestBalance.bank_branch_highest }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <br/>
+    <br/>
+    <table>
+        <caption style="text-align:left">Top Bank Branches</caption>
+        <tr>
+            <td>name</td>
+            <td>location</td>
+        </tr>
+        {% for topBankBranche in topBankBranches %}
+            <tr>
+                <td>{{ topBankBranche.bank_branch_name }}</td>
+                <td>{{ topBankBranche.bank_branch_location }}</td>
             </tr>
         {% endfor %}
     </table>

@@ -45,7 +45,22 @@ SQL
 
     public function searchByTopBankBranches(): ?array
     {
-        // TODO: Implement searchByUserId() method.
+                $stm = $this->connection->prepare(
+                    <<<SQL
+        SELECT 
+               bb.name AS bank_branch_name, 
+               bb.location AS bank_branch_location
+        FROM bank_branches bb
+        JOIN user_balances ub ON bb.id = ub.bank_branch_id
+        JOIN users u ON bb.id = u.bank_branch_id AND ub.user_id = u.id
+        WHERE ub.balance > 50000
+        GROUP BY bb.name, bb.location
+        HAVING COUNT(*) > 2;
+SQL
+                );
+        $rst = $stm->executeQuery();
+        return $rst->fetchAllAssociative();
+
     }
 
     public function updateBalance(UserId $userId, float $balance): ?bool
