@@ -11,7 +11,7 @@ users_list:
   controller: SimpleBank\Controller\UserController::list
 
 users_bank_branches_add:
-  path: /users/bank_branches/{branchId}
+  path: /users/bank_branches/{bankBranchId}
   controller: SimpleBank\Controller\UserController::add
 
 users_show:
