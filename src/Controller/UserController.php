@@ -2,11 +2,9 @@
 
 namespace SimpleBank\Controller;
 
-use SimpleBank\Application\User\CreateUser;
+use SimpleBank\Application\DataTransformer\User\UserDto;
+use SimpleBank\Application\Service\User\CreateUser;
 use SimpleBank\Controller\Form\UserType;
-use SimpleBank\Domain\Model\BankBranch\BankBranchId;
-use SimpleBank\Domain\Model\User\User;
-use SimpleBank\Domain\Model\User\UserId;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,13 +23,11 @@ class UserController extends AbstractController
 
             $data = $form->getData();
 
-            $user = new User(
-                new UserId(),
-                $data['name'],
-                new BankBranchId($bankBranchId)
-            );
+            $userDto = new UserDto();
+            $userDto->setName($data['name']);
+            $userDto->setBranchId($bankBranchId);
 
-            if($createUser->save($user)) {
+            if($createUser->save($userDto)) {
                 $this->addFlash('success', 'User Created!');
             }
         }

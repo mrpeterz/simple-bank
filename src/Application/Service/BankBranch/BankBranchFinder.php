@@ -1,6 +1,6 @@
 <?php
 
-namespace SimpleBank\Application\BankBranch;
+namespace SimpleBank\Application\Service\BankBranch;
 
 use SimpleBank\Domain\Model\BankBranch\BankBranchRepositoryInterface;
 

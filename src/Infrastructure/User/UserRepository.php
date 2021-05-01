@@ -37,4 +37,9 @@ class UserRepository implements UserRepositoryInterface
         $stm = $this->connection->prepare("SELECT * FROM users WHERE");
         return $stm->executeQuery()->fetchAllAssociative();
     }
+
+    public function nextIdentity(): UserId
+    {
+        return new UserId();
+    }
 }

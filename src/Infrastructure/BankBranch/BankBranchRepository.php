@@ -35,6 +35,12 @@ class BankBranchRepository implements BankBranchRepositoryInterface
     public function all(): ?array
     {
         $stm = $this->connection->prepare("SELECT * FROM bank_branches");
-        return $stm->executeQuery()->fetchAllAssociative();
+        $rst = $stm->executeQuery();
+        return $rst->fetchAllAssociative();
+    }
+
+    public function nextIdentity(): BankBranchId
+    {
+        return new BankBranchId();
     }
 }
