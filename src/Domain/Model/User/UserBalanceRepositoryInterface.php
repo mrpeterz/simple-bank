@@ -8,7 +8,7 @@ interface UserBalanceRepositoryInterface
 
     public function updateBalance(UserId $userId, float $balance): ?bool;
 
-    public function searchByHightestBalance(): ?array;
+    public function searchByHighestBalance(): ?array;
 
     public function searchByTopBankBranches(): ?array;
 }

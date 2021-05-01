@@ -12,4 +12,9 @@ class StatsFactory
     {
         $this->userBalanceRepository = $userBalanceRepository;
     }
+
+    public function highestBalances(): ?array
+    {
+        return $this->userBalanceRepository->searchByHighestBalance();
+    }
 }

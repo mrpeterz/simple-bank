@@ -24,13 +24,13 @@
         <tr>
             <td>name</td>
             <td>location</td>
-            <td>option</td>
+            <td>balance</td>
         </tr>
-        {% for item in items %}
+        {% for highestBalance in highestBalances %}
             <tr>
-                <td>{{ item.bank_branch_name }}</td>
-                <td>{{ item.bank_branch_location }}</td>
-                <td><a href="users/bank_branches/{{item.bank_branch_id}}">Add User</a></td>
+                <td>{{ highestBalance.bank_branch_name }}</td>
+                <td>{{ highestBalance.bank_branch_location }}</td>
+                <td>{{ highestBalance.bank_branch_highest }}</td>
             </tr>
         {% endfor %}
     </table>

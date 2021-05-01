@@ -25,14 +25,14 @@ class UserBalanceRepository implements UserBalanceRepositoryInterface
         return $stm->execute();
     }
 
-    public function searchByHightestBalance(): ?array
+    public function searchByHighestBalance(): ?array
     {
         $stm = $this->connection->prepare(
             <<<SQL
         SELECT 
            bb.name AS bank_branch_name,
            bb.location AS bank_branch_location,
-           ifnull(max(ub.balance),0) AS bank_branch_hightest
+           ifnull(max(ub.balance),0) AS bank_branch_highest
         FROM bank_branches bb
         LEFT JOIN user_balances ub ON bb.id = ub.bank_branch_id
         LEFT JOIN users u ON bb.id = u.bank_branch_id AND ub.user_id = u.id
