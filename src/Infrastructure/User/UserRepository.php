@@ -29,13 +29,15 @@ class UserRepository implements UserRepositoryInterface
     {
         $stm = $this->connection->prepare("SELECT * FROM users WHERE id = ?");
         $stm->bindValue(1, $userId);
-        return $stm->executeQuery()->fetchAssociative();
+        $rst = $stm->executeQuery();
+        return $rst->fetchAssociative();
     }
 
     public function all(): ?array
     {
         $stm = $this->connection->prepare("SELECT * FROM users");
-        return $stm->executeQuery()->fetchAllAssociative();
+        $rst = $stm->executeQuery();
+        return $rst->fetchAllAssociative();
     }
 
     public function nextIdentity(): UserId
