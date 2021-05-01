@@ -26,8 +26,10 @@ class BankBranchController extends AbstractController
             $userDto->setName($data['name']);
             $userDto->setLocation($data['location']);
 
-            if($createUser->save($userDto)) {
-                $this->addFlash('success', 'Bank Branch Created!');
+            if(!$createUser->save($userDto)) {
+                $this->addFlash('error', 'Problem with Bank Branch creation.');
+            }else{
+                $this->addFlash('success', 'Bank Branch created.');
             }
         }
 

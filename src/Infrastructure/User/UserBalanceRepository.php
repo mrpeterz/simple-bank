@@ -3,7 +3,6 @@
 namespace SimpleBank\Infrastructure\User;
 
 use Doctrine\DBAL\Connection;
-use SimpleBank\Domain\Model\BankBranch\BankBranchId;
 use SimpleBank\Domain\Model\User\UserBalance;
 use SimpleBank\Domain\Model\User\UserBalanceRepositoryInterface;
 use SimpleBank\Domain\Model\User\UserId;
@@ -26,12 +25,25 @@ class UserBalanceRepository implements UserBalanceRepositoryInterface
         return $stm->execute();
     }
 
-    public function searchByMaxBalance(UserId $userId, BankBranchId $bankBranchId): ?array
+    public function searchByHightestBalance(): ?array
     {
-        // TODO: Implement searchByMaxBalance() method.
+        $stm = $this->connection->prepare(
+            <<<SQL
+        SELECT 
+           bb.name AS bank_branch_name,
+           bb.location AS bank_branch_location,
+           ifnull(max(ub.balance),0) AS bank_branch_hightest
+        FROM bank_branches bb
+        LEFT JOIN user_balances ub ON bb.id = ub.bank_branch_id
+        LEFT JOIN users u ON bb.id = u.bank_branch_id AND ub.user_id = u.id
+        GROUP BY bb.id;
+SQL
+        );
+        $rst = $stm->executeQuery();
+        return $rst->fetchAllAssociative();
     }
 
-    public function searchByUserId(UserId $userId): ?array
+    public function searchByTopBankBranches(): ?array
     {
         // TODO: Implement searchByUserId() method.
     }

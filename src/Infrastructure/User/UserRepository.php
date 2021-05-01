@@ -62,6 +62,7 @@ SQL
         FROM users u 
         JOIN bank_branches b ON u.bank_branch_id = b.id
         JOIN user_balances ub ON b.id = ub.bank_branch_id AND u.id = ub.user_id
+        ORDER BY b.id, ub.balance DESC
 SQL
         );
         $rst = $stm->executeQuery();

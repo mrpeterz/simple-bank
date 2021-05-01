@@ -22,3 +22,11 @@ users_show:
   path: /users/{userId}
   controller: SimpleBank\Controller\UserController::show
 
+stats_hightest:
+  path: /stats/hightest
+  controller: SimpleBank\Controller\StatsController::hightest
+
+stats_top:
+  path: /stats/top
+  controller: SimpleBank\Controller\StatsController::top
+
