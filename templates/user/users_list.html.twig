@@ -22,12 +22,16 @@
     <table>
         <tr>
             <td>name</td>
+            <td>bank branch</td>
+            <td>location</td>
             <td>option</td>
         </tr>
-        {% for user in users %}
+        {% for item in items %}
             <tr>
-                <td>{{ user.name }}</td>
-                <td><a href="/users/{{user.id}}">Show User details</a></td>
+                <td>{{ item.user_name }}</td>
+                <td>{{ item.bank_branch_name }}</td>
+                <td>{{ item.bank_branch_location }}</td>
+                <td><a href="/users/{{item.user_id}}">Show User details</a></td>
             </tr>
         {% endfor %}
     </table>

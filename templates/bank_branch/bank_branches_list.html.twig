@@ -25,11 +25,11 @@
             <td>location</td>
             <td>option</td>
         </tr>
-        {% for bankBranch in bankBranches %}
+        {% for item in items %}
             <tr>
-                <td>{{ bankBranch.name }}</td>
-                <td>{{ bankBranch.location }}</td>
-                <td><a href="users/bank_branches/{{bankBranch.id}}">Add User</a></td>
+                <td>{{ item.bank_branch_name }}</td>
+                <td>{{ item.bank_branch_location }}</td>
+                <td><a href="users/bank_branches/{{item.bank_branch_id}}">Add User</a></td>
             </tr>
         {% endfor %}
     </table>

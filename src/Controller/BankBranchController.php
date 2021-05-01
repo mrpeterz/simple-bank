@@ -38,10 +38,10 @@ class BankBranchController extends AbstractController
 
     public function list(BankBranchFinder $bankBranchFinder): Response
     {
-        $bankBranches = $bankBranchFinder->listBankBranches();
+        $items = $bankBranchFinder->listBankBranches();
 
         return $this->render('bank_branch\bank_branches_list.html.twig', [
-            'bankBranches' => $bankBranches
+            'items' => $items
         ]);
     }
 }

@@ -27,7 +27,10 @@ class BankBranchRepository implements BankBranchRepositoryInterface
 
     public function search(BankBranchId $bankBranchId): ?array
     {
-        $stm = $this->connection->prepare("SELECT * FROM bank_branches WHERE id = ?");
+        $stm = $this->connection->prepare(
+            "SELECT b.id AS bank_branch_id, b.name AS bank_branch_name, b.location AS bank_branch_location 
+            FROM bank_branches b WHERE id = ?"
+        );
         $stm->bindValue(1, $bankBranchId);
         $rst = $stm->executeQuery();
         return $rst->fetchAssociative();
@@ -35,7 +38,10 @@ class BankBranchRepository implements BankBranchRepositoryInterface
 
     public function all(): ?array
     {
-        $stm = $this->connection->prepare("SELECT * FROM bank_branches");
+        $stm = $this->connection->prepare(
+            "SELECT b.id AS bank_branch_id, b.name AS bank_branch_name, b.location AS bank_branch_location 
+            FROM bank_branches b"
+        );
         $rst = $stm->executeQuery();
         return $rst->fetchAllAssociative();
     }

@@ -40,21 +40,20 @@ class UserController extends AbstractController
 
     public function list(UserFinder $userFinder): Response
     {
-        $users = $userFinder->listUsers();
+        $items = $userFinder->listUsers();
 
         return $this->render('user\users_list.html.twig', [
-            'users' => $users
+            'items' => $items
         ]);
     }
 
     public function show(Request $request, UserFinder $userFinder): Response
     {
         $userId = $request->attributes->get('userId');
-
-        $user = $userFinder->searchUsers($userId);
+        $item = $userFinder->searchUsers($userId);
 
         return $this->render('user\users_show.html.twig', [
-            'user' => $user
+            'item' => $item
         ]);
     }
 }
