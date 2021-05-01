@@ -45,7 +45,7 @@ class UserDto implements Dto
      */
     public function getBranchId(): string
     {
-        return new $this->branchId;
+        return $this->branchId;
     }
 
     /**
