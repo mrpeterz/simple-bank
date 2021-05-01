@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Simple Bank</title>
+    <title>Users Bank Branches</title>
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
@@ -21,14 +21,16 @@
     </ul>
     <table>
         <tr>
-            <td>name</td>
-            <td>bank branch</td>
-            <td>location</td>
+            <td>user name</td>
+            <td>user balance</td>
+            <td>bank branch name</td>
+            <td>bank branch location</td>
             <td>option</td>
         </tr>
         {% for item in items %}
             <tr>
                 <td>{{ item.user_name }}</td>
+                <td>{{ item.user_balance }}</td>
                 <td>{{ item.bank_branch_name }}</td>
                 <td>{{ item.bank_branch_location }}</td>
                 <td><a href="/users/{{item.user_id}}">Show User details</a></td>

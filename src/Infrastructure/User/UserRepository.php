@@ -28,9 +28,19 @@ class UserRepository implements UserRepositoryInterface
     public function search(UserId $userId): ?array
     {
         $stm = $this->connection->prepare(
-            "SELECT u.id AS user_id, u.name AS user_name, b.id AS bank_branch_id, 
-                        b.name AS bank_branch_name, b.location AS bank_branch_location 
-                FROM users u JOIN bank_branches b ON u.bank_branch_id = b.id WHERE u.id = ?"
+<<<SQL
+        SELECT 
+               u.id AS user_id, 
+               u.name AS user_name, 
+               ub.balance AS user_balance,
+               b.id AS bank_branch_id, 
+               b.name AS bank_branch_name, 
+               b.location AS bank_branch_location 
+        FROM users u 
+        JOIN bank_branches b ON u.bank_branch_id = b.id
+        JOIN user_balances ub ON b.id = ub.bank_branch_id AND u.id = ub.user_id
+        WHERE u.id = ?
+SQL
         );
 
         $stm->bindValue(1, $userId);
@@ -41,9 +51,18 @@ class UserRepository implements UserRepositoryInterface
     public function all(): ?array
     {
         $stm = $this->connection->prepare(
-            "SELECT u.id AS user_id, u.name AS user_name, b.id AS bank_branch_id, 
-                        b.name AS bank_branch_name, b.location AS bank_branch_location 
-                FROM users u JOIN bank_branches b ON u.bank_branch_id = b.id"
+<<<SQL
+        SELECT 
+               u.id AS user_id, 
+               u.name AS user_name, 
+               ub.balance AS user_balance,
+               b.id AS bank_branch_id, 
+               b.name AS bank_branch_name, 
+               b.location AS bank_branch_location 
+        FROM users u 
+        JOIN bank_branches b ON u.bank_branch_id = b.id
+        JOIN user_balances ub ON b.id = ub.bank_branch_id AND u.id = ub.user_id
+SQL
         );
         $rst = $stm->executeQuery();
         return $rst->fetchAllAssociative();
