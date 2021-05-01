@@ -19,8 +19,8 @@ class CreateBankBranch
     {
         $bankBranch = new BankBranch(
             $this->bankBranchRepository->nextIdentity(),
-            $bankBranchDto->getName(),
-            $bankBranchDto->getLocation()
+            $bankBranchDto->name(),
+            $bankBranchDto->location()
         );
 
         return $this->bankBranchRepository->save($bankBranch);

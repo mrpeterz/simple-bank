@@ -3,21 +3,25 @@
 namespace SimpleBank\Domain\Model\User;
 
 use SimpleBank\Domain\Model\BankBranch\BankBranchId;
+use SimpleBank\Domain\Model\User\AggregateRoot\AggregateRoot;
 
-class User
+class User extends AggregateRoot
 {
     private UserId $id;
     private string $name;
     private BankBranchId $bankBranchId;
+    private UserBalance $userBalance;
 
     public function __construct(
       UserId $id,
       string $name,
-      BankBranchId $bankBranchId
+      BankBranchId $bankBranchId,
+      float $balance
     ) {
         $this->id = $id;
         $this->name = $name;
         $this->bankBranchId = $bankBranchId;
+        $this->userBalance = new UserBalance($id,$bankBranchId,$balance);
     }
 
     public function id(): UserId
@@ -33,6 +37,16 @@ class User
     public function bankBranchId(): BankBranchId
     {
         return $this->bankBranchId;
+    }
+
+    public function updateBalance(UserBalance $userBalance)
+    {
+        $this->userBalance = $userBalance;
+    }
+
+    public function balance(): UserBalance
+    {
+        return $this->userBalance;
     }
 
     public function toArray(): array

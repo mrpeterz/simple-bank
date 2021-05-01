@@ -26,7 +26,8 @@ class UserController extends AbstractController
 
             $userDto = new UserDto();
             $userDto->setName($data['name']);
-            $userDto->setBranchId($bankBranchId);
+            $userDto->setBalance($data['balance']);
+            $userDto->setBankBranchId($bankBranchId);
 
             if($createUser->save($userDto)) {
                 $this->addFlash('success', 'User Created!');
