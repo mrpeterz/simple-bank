@@ -1,11 +1,20 @@
 index:
   path: /
-  controller: SimpleBank\Controller\BankBranchController::show
+  controller: SimpleBank\Controller\MainController::index
 
-user:
-  path: /user/{bankBranchId}
+bank_branches_list:
+  path: /bank_branches
+  controller: SimpleBank\Controller\BankBranchController::list
+
+users_list:
+  path: /users
+  controller: SimpleBank\Controller\UserController::list
+
+users_bank_branches_add:
+  path: /users/bank_branches/{branchId}
   controller: SimpleBank\Controller\UserController::add
 
-users:
-  path: /users
+users_show:
+  path: /users/{userId}
   controller: SimpleBank\Controller\UserController::show
+

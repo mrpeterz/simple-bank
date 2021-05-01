@@ -8,11 +8,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class BankBranchController extends AbstractController
 {
-    public function show(BankBranchFinder $bankBranchFinder): Response
+    public function list(BankBranchFinder $bankBranchFinder): Response
     {
         $bankBranches = $bankBranchFinder->listBankBranches();
 
-        return $this->render('bank_branch\bank_branch.html.twig', [
+        return $this->render('bank_branch\bank_branches_list.html.twig', [
             'bankBranches' => $bankBranches
         ]);
     }

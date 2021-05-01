@@ -33,17 +33,28 @@ class UserController extends AbstractController
             }
         }
 
-        return $this->render('user/user.html.twig', [
+        return $this->render('user/users_bank_branches_add.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
-    public function show(UserFinder $userFinder): Response
+    public function list(UserFinder $userFinder): Response
     {
         $users = $userFinder->listUsers();
 
-        return $this->render('user\users.html.twig', [
+        return $this->render('user\users_list.html.twig', [
             'users' => $users
+        ]);
+    }
+
+    public function show(Request $request, UserFinder $userFinder): Response
+    {
+        $userId = $request->attributes->get('userId');
+
+        $user = $userFinder->searchUsers($userId);
+
+        return $this->render('user\users_show.html.twig', [
+            'user' => $user
         ]);
     }
 }

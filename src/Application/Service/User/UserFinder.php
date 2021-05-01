@@ -2,6 +2,7 @@
 
 namespace SimpleBank\Application\Service\User;
 
+use SimpleBank\Domain\Model\User\UserId;
 use SimpleBank\Domain\Model\User\UserRepositoryInterface;
 
 class UserFinder
@@ -16,5 +17,10 @@ class UserFinder
     public function listUsers(): ?array
     {
         return $this->userRepository->all();
+    }
+
+    public function searchUsers(string $userId): ?array
+    {
+        return $this->userRepository->search(new UserId($userId));
     }
 }
