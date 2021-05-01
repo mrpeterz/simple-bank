@@ -1,8 +1,6 @@
 <?php
 
-
 namespace SimpleBank\Application\DataTransformer\User;
-
 
 class UserDto implements Dto
 {

@@ -2,7 +2,7 @@
 
 namespace SimpleBank\Controller;
 
-use SimpleBank\Application\BankBranch\BankBranchFinder;
+use SimpleBank\Application\Service\BankBranch\BankBranchFinder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
