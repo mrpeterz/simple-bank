@@ -18,12 +18,20 @@ class CreateUser
 
     public function save(UserDto $userDto): bool
     {
-        $user = new User(
-            $this->userRepository->nextIdentity(),
-            $userDto->getName(),
-            new BankBranchId($userDto->getBranchId())
-        );
+        //try {
+            $user = new User(
+                $this->userRepository->nextIdentity(),
+                $userDto->getName(),
+                new BankBranchId($userDto->getBranchId())
+            );
 
-        return $this->userRepository->save($user);
+            return $this->userRepository->save($user);
+        /*} catch (DbException $exception) {
+            //log something
+
+        } catch (BadUuidException $exception) {
+            //
+        }*/
     }
+
 }

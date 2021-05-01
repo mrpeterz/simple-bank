@@ -23,7 +23,7 @@ final class Version20210427223852 extends AbstractMigration
                bank_branch_id VARCHAR(255),
                PRIMARY KEY(id),
                INDEX ix_users_bank_branch_id(bank_branch_id),
-               CONSTRAINT fk_users_bank_branches_branch_id FOREIGN KEY (bank_branch_id)
+               CONSTRAINT fk_users_bank_branches_bank_branch_id FOREIGN KEY (bank_branch_id)
                    REFERENCES bank_branches(id)
                    ON DELETE CASCADE
             ) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB;        ');
