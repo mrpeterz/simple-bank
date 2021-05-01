@@ -1,12 +1,12 @@
 <?php
 
-namespace SimpleBank\Application\DataTransformer\User;
+namespace SimpleBank\Application\DataTransformer\BankBranch;
 
-class UserDto implements Dto
+class BankBranchDto implements Dto
 {
     private string $id;
     private string $name;
-    private string $branchId;
+    private string $location;
 
     /**
      * @return string
@@ -43,18 +43,16 @@ class UserDto implements Dto
     /**
      * @return string
      */
-    public function getBranchId(): string
+    public function getLocation(): string
     {
-        return new $this->branchId;
+        return $this->location;
     }
 
     /**
-     * @param string $branchId
+     * @param string $location
      */
-    public function setBranchId(string $branchId): void
+    public function setLocation(string $location): void
     {
-        $this->branchId = $branchId;
+        $this->location = $location;
     }
-
-
 }

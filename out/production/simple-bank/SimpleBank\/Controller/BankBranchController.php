@@ -2,36 +2,35 @@
 
 namespace SimpleBank\Controller;
 
-use SimpleBank\Application\DataTransformer\BankBranch\BankBranchDto;
 use SimpleBank\Application\Service\BankBranch\BankBranchFinder;
-use SimpleBank\Application\Service\BankBranch\CreateBankBranch;
-use SimpleBank\Controller\Form\BankBranchType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class BankBranchController extends AbstractController
 {
-    public function add(Request $request, CreateBankBranch $createUser): Response
+    public function add(Request $request, CreateUser $createUser): Response
     {
-        $form = $this->createForm(BankBranchType::class);
+        $form = $this->createForm(UserType::class);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            $bankBranchId = $request->attributes->get('bankBranchId');
+
             $data = $form->getData();
 
-            $userDto = new BankBranchDto();
+            $userDto = new UserDto();
             $userDto->setName($data['name']);
-            $userDto->setLocation($data['location']);
+            $userDto->setBranchId($bankBranchId);
 
             if($createUser->save($userDto)) {
-                $this->addFlash('success', 'Bank Branch Created!');
+                $this->addFlash('success', 'User Created!');
             }
         }
 
-        return $this->render('bank_branch/bank_branches_add.html.twig', [
+        return $this->render('user/users_bank_branches_add.html.twig', [
             'form' => $form->createView(),
         ]);
     }

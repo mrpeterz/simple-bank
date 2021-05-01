@@ -6,6 +6,10 @@ bank_branches_list:
   path: /bank_branches
   controller: SimpleBank\Controller\BankBranchController::list
 
+bank_branches_add:
+  path: /bank_branches/add
+  controller: SimpleBank\Controller\BankBranchController::add
+
 users_list:
   path: /users
   controller: SimpleBank\Controller\UserController::list
