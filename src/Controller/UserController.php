@@ -31,9 +31,9 @@ class UserController extends AbstractController
 
             if(!$createUser->save($userDto)) {
                 $this->addFlash('error', 'Problem with User creation.');
+            }else{
+                $this->addFlash('success', 'User created.');
             }
-
-            $this->addFlash('success', 'User created.');
         }
 
         return $this->render('user/users_bank_branches_add.html.twig', [

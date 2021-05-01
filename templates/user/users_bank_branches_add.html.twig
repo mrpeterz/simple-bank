@@ -21,10 +21,12 @@
     </ul>
         {{ form(form) }}
 
-        {% for label,message in app.flashes(['success','error']) %}
-            <div class="alert alert-{{ label }}">
-                {{ message }}
-            </div>
+        {% for label, messages in app.flashes(['success', 'error']) %}
+            {% for message in messages %}
+                <div class="flash-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
         {% endfor %}
 
 
