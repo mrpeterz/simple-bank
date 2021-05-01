@@ -29,9 +29,11 @@ class UserController extends AbstractController
             $userDto->setBalance($data['balance']);
             $userDto->setBankBranchId($bankBranchId);
 
-            if($createUser->save($userDto)) {
-                $this->addFlash('success', 'User Created!');
+            if(!$createUser->save($userDto)) {
+                $this->addFlash('error', 'Problem with User creation.');
             }
+
+            $this->addFlash('success', 'User created.');
         }
 
         return $this->render('user/users_bank_branches_add.html.twig', [

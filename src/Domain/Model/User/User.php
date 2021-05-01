@@ -39,12 +39,12 @@ class User extends AggregateRoot
         return $this->bankBranchId;
     }
 
-    public function updateBalance(UserBalance $userBalance)
+    public function updateBalance(UserBalance $userBalance): void
     {
         $this->userBalance = $userBalance;
     }
 
-    public function balance(): UserBalance
+    public function userBalance(): UserBalance
     {
         return $this->userBalance;
     }

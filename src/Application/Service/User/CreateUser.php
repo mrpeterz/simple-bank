@@ -2,7 +2,7 @@
 
 namespace SimpleBank\Application\Service\User;
 
-use PHPUnit\Util\Exception;
+use Doctrine\DBAL\Driver\Connection;
 use SimpleBank\Application\DataTransformer\User\UserDto;
 use SimpleBank\Domain\Model\BankBranch\BankBranchId;
 use SimpleBank\Domain\Model\User\User;
@@ -13,34 +13,40 @@ class CreateUser
 {
     private UserRepositoryInterface $userRepository;
     private UserBalanceRepositoryInterface $userBalancesRepository;
+    private Connection $connection;
 
     public function __construct(
         UserRepositoryInterface $userRepository,
-        UserBalanceRepositoryInterface $userBalanceRepository
+        UserBalanceRepositoryInterface $userBalanceRepository,
+        Connection $connection
     ) {
         $this->userRepository = $userRepository;
         $this->userBalancesRepository = $userBalanceRepository;
+        $this->connection = $connection;
     }
 
     public function save(UserDto $userDto): bool
     {
-        $user = null;
+        $this->connection->beginTransaction();
 
-        try{
+        try {
 
-        $user = new User(
-            $this->userRepository->nextIdentity(),
-            $userDto->name(),
-            new BankBranchId($userDto->bankBranchId()),
-            $userDto->balance()
-        );
+            $user = new User(
+                $this->userRepository->nextIdentity(),
+                $userDto->name(),
+                new BankBranchId($userDto->bankBranchId()),
+                $userDto->balance()
+            );
 
-        $this->userRepository->save($user);
+            $this->userRepository->save($user);
+            $this->userBalancesRepository->save($user->userBalance());
 
-        }catch (\Exception $exception) {
-            //
+            $this->connection->commit();
+            return true;
+
+        }catch(\Exception $exception) {
+            $this->connection->rollBack();
+            return false;
         }
-
-        return $this->userBalancesRepository->save($user->balance());
     }
 }
