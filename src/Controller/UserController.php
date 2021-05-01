@@ -4,6 +4,7 @@ namespace SimpleBank\Controller;
 
 use SimpleBank\Application\DataTransformer\User\UserDto;
 use SimpleBank\Application\Service\User\CreateUser;
+use SimpleBank\Application\Service\User\UserFinder;
 use SimpleBank\Controller\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,6 +35,15 @@ class UserController extends AbstractController
 
         return $this->render('user/user.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    public function show(UserFinder $userFinder): Response
+    {
+        $users = $userFinder->listUsers();
+
+        return $this->render('user\users.html.twig', [
+            'users' => $users
         ]);
     }
 }

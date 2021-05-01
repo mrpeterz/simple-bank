@@ -5,3 +5,7 @@ index:
 user:
   path: /user/{bankBranchId}
   controller: SimpleBank\Controller\UserController::add
+
+users:
+  path: /users
+  controller: SimpleBank\Controller\UserController::show

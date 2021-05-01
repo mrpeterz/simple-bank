@@ -12,14 +12,11 @@
 <table>
     <tr>
         <td>name</td>
-        <td>location</td>
         <td>option</td>
     </tr>
-    {% for bankBranch in bankBranches %}
+    {% for user in users %}
         <tr>
-            <td>{{ bankBranch.name }}</td>
-            <td>{{ bankBranch.location }}</td>
-            <td><a href="user/{{bankBranch.id}}">Add User</a></td>
+            <td>{{ user.name }}</td>
         </tr>
     {% endfor %}
 </table>

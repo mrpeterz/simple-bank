@@ -34,7 +34,7 @@ class UserRepository implements UserRepositoryInterface
 
     public function all(): ?array
     {
-        $stm = $this->connection->prepare("SELECT * FROM users WHERE");
+        $stm = $this->connection->prepare("SELECT * FROM users");
         return $stm->executeQuery()->fetchAllAssociative();
     }
 
