@@ -30,11 +30,14 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
-    SimpleBank\Domain\User\UserRepositoryInterface:
-        class: 'SimpleBank\Infrastructure\Domain\User\UserRepository'
+    SimpleBank\Domain\Model\User\UserRepositoryInterface:
+        class: 'SimpleBank\Infrastructure\User\UserRepository'
 
-    SimpleBank\Domain\BankBranch\UserBalancesRepositoryInterface:
-        class: 'SimpleBank\Infrastructure\Domain\User\UserBalancesRepository'
+    SimpleBank\Domain\Model\BankBranch\UserBalancesRepositoryInterface:
+        class: 'SimpleBank\Infrastructure\User\UserBalancesRepository'
 
-    SimpleBank\Domain\BankBranch\BankBranchRepositoryInterface:
-        class: 'SimpleBank\Infrastructure\Domain\BankBranch\BankBranchRepository'
+    SimpleBank\Domain\Model\BankBranch\BankBranchRepositoryInterface:
+        class: 'SimpleBank\Infrastructure\BankBranch\BankBranchRepository'
+
+    SimpleBank\Domain\Transactions:
+        class: 'SimpleBank\Infrastructure\TransactionalManager'

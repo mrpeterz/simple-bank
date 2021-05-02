@@ -2,32 +2,32 @@
 
 namespace SimpleBank\Application\Service\BankBranch;
 
-use Doctrine\DBAL\Driver\Connection;
 use SimpleBank\Application\DataTransformer\BankBranch\BankTransferDto;
 use SimpleBank\Domain\Model\User\User;
 use SimpleBank\Domain\Model\User\UserBalanceRepositoryInterface;
 use SimpleBank\Domain\Model\User\UserId;
 use SimpleBank\Domain\Model\User\UserRepositoryInterface;
+use SimpleBank\Domain\Transactions;
 
 class BankTransferManager
 {
     private UserRepositoryInterface $userRepository;
     private UserBalanceRepositoryInterface $userBalancesRepository;
-    private Connection $connection;
+    private Transactions $transactionalManager;
 
     public function __construct(
         UserRepositoryInterface $userRepository,
         UserBalanceRepositoryInterface $userBalanceRepository,
-        Connection $connection
+        Transactions $transactionalManager
     ) {
         $this->userRepository = $userRepository;
         $this->userBalancesRepository = $userBalanceRepository;
-        $this->connection = $connection;
+        $this->transactionalManager = $transactionalManager;
     }
 
     public function wireTransfer(BankTransferDto $bankTransferDto): bool
     {
-        $this->connection->beginTransaction();
+        $this->transactionalManager->beginTransaction();
 
         try{
 
@@ -77,11 +77,11 @@ class BankTransferManager
                     )
                 );
 
-            $this->connection->commit();
+            $this->transactionalManager->commit();
             return true;
 
         }catch (\Exception $exception) {
-            $this->connection->rollBack();
+            $this->transactionalManager->rollBack();
             return false;
         }
     }
