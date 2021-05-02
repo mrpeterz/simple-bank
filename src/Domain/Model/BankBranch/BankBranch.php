@@ -32,14 +32,4 @@ class BankBranch
     {
         return $this->location;
     }
-
-    public function toArray(): array
-    {
-        return
-            [
-                'id' => (string)$this->id(),
-                'name' => (string)$this->name(),
-                'location' => (string)$this->location()
-            ];
-    }
 }
