@@ -48,4 +48,14 @@ class User extends AggregateRoot
     {
         return $this->userBalance;
     }
+
+    public static function fromArray(array $user): User
+    {
+        return new self(
+            new UserId($user['id']),
+            $user['name'],
+            new BankBranchId($user['bank_branch_id']),
+            $user['balance']
+        );
+    }
 }

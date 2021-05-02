@@ -1,10 +1,10 @@
 <?php
 
-namespace SimpleBank\Application\Service\Stats;
+namespace SimpleBank\Application\Service\BankBranch;
 
 use SimpleBank\Domain\Model\User\UserBalanceRepositoryInterface;
 
-class StatsFactory
+class BankBranchStats
 {
     private UserBalanceRepositoryInterface $userBalanceRepository;
 
