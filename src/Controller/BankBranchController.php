@@ -7,6 +7,7 @@ use SimpleBank\Application\Service\BankBranch\BankBranchFinderService;
 use SimpleBank\Application\Service\BankBranch\CreateBankBranchService;
 use SimpleBank\Controller\Form\BankBranchType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -30,7 +31,7 @@ class BankBranchController extends AbstractController
                 $createBankBranchService->save($bankBranchDto);
                 $this->addFlash('success', 'Bank Branch created.');
             }catch (\Exception $exception) {
-                $this->addFlash('error', 'Problem with Bank Branch creation: ' . $exception->getMessage());
+                $form->addError(new FormError($exception->getMessage()));
             }
         }
 

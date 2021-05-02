@@ -24,32 +24,30 @@ class CreateBankBranchService
 
     public function save(BankBranchDto $bankBranchDto): bool
     {
-        $bankBranch = new BankBranch(
-            $this->bankBranchRepository->nextIdentity(),
-            $bankBranchDto->name(),
-            $bankBranchDto->location()
-        );
-
-        if (!$bankBranch) {
-            throw new BankBranchNotExistsException('Bank branch cannot be null.');
-        }
-
-        if ($this->bankBranchRepository->exists($bankBranch)) {
-            throw new BankBranchAlreadyExistsException('Bank branch already exists.');
-        }
-
         $this->transactionalManager->beginTransaction();
 
         try{
+            $bankBranch = new BankBranch(
+                $this->bankBranchRepository->nextIdentity(),
+                $bankBranchDto->name(),
+                $bankBranchDto->location()
+            );
+
+            if (!$bankBranch) {
+                throw new BankBranchNotExistsException('Bank branch cannot be null.');
+            }
+
+            if ($this->bankBranchRepository->exists($bankBranch)) {
+                throw new BankBranchAlreadyExistsException('Bank branch already exists.');
+            }
 
             $this->bankBranchRepository->save($bankBranch);
-            $this->transactionalManager->commit();
 
-            return true;
+            return $this->transactionalManager->commit();
 
         } catch (\Exception $exception) {
             $this->transactionalManager->rollBack();
-            return false;
+            throw $exception;
         }
     }
 }

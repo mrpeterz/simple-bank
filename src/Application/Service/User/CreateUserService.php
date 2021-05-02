@@ -6,6 +6,7 @@ use SimpleBank\Application\DataTransformer\User\UserDto;
 use SimpleBank\Domain\Model\BankBranch\BankBranchId;
 use SimpleBank\Domain\Model\User\User;
 use SimpleBank\Domain\Model\User\UserBalanceRepositoryInterface;
+use SimpleBank\Domain\Model\User\UserNotExistsException;
 use SimpleBank\Domain\Model\User\UserRepositoryInterface;
 use SimpleBank\Domain\Transactions;
 
@@ -30,7 +31,6 @@ class CreateUserService
         $this->transactionalManager->beginTransaction();
 
         try {
-
             $user = new User(
                 $this->userRepository->nextIdentity(),
                 $userDto->name(),
@@ -39,18 +39,17 @@ class CreateUserService
             );
 
             if (!$user) {
-                throw new \Exception('User cannot be null.');
+                throw new UserNotExistsException('User cannot be null.');
             }
 
             $this->userRepository->save($user);
             $this->userBalancesRepository->save($user->userBalance());
 
-            $this->transactionalManager->commit();
-            return true;
+            return$this->transactionalManager->commit();
 
         }catch(\Exception $exception) {
             $this->transactionalManager->rollBack();
-            return false;
+            throw $exception;
         }
     }
 }

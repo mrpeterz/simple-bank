@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace SimpleBank\Infrastructure\BankBranch;
 
 use Doctrine\DBAL\Connection;

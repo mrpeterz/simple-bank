@@ -10,6 +10,7 @@ use SimpleBank\Application\Service\User\UserFinderService;
 use SimpleBank\Controller\Form\UserType;
 use SimpleBank\Controller\Form\WireTransferType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -86,10 +87,11 @@ class UserController extends AbstractController
             $bankTransferDto->setToUserId($data['toUserId']);
             $bankTransferDto->setAmount($data['amount']);
 
-            if(!$bankTransferManager->wireTransfer($bankTransferDto)) {
-                $this->addFlash('error', 'Problem with wire transfer.');
-            }else{
+            try {
+                $bankTransferManager->wireTransfer($bankTransferDto);
                 $this->addFlash('success', 'Wire transfer done.');
+            }catch (\Exception $exception) {
+                $form->addError(new FormError($exception->getMessage()));
             }
         }
 

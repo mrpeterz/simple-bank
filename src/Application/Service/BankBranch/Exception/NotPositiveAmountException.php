@@ -2,6 +2,6 @@
 
 namespace SimpleBank\Application\Service\BankBranch\Exception;
 
-class AmountNotPositiveException extends \Exception
+class NotPositiveAmountException extends \Exception
 {
 }
