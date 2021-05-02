@@ -33,10 +33,11 @@ class UserController extends AbstractController
             $userDto->setBalance($data['balance']);
             $userDto->setBankBranchId($bankBranchId);
 
-            if(!$createUserService->save($userDto)) {
-                $this->addFlash('error', 'Problem with User creation.');
-            }else{
+            try {
+                $createUserService->save($userDto);
                 $this->addFlash('success', 'User created.');
+            }catch (\Exception $exception) {
+                $form->addError(new FormError($exception->getMessage()));
             }
         }
 
