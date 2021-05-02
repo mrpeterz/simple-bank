@@ -3,6 +3,7 @@
 namespace SimpleBank\Infrastructure;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\ConnectionException;
 use SimpleBank\Domain\Transactions;
 
 class TransactionalManager implements Transactions
@@ -21,11 +22,19 @@ class TransactionalManager implements Transactions
 
     public function commit(): bool
     {
-        return $this->connection->commit();
+        try {
+            return $this->connection->commit();
+        } catch (ConnectionException $e) {
+            throw $e;
+        }
     }
 
     public function rollBack(): bool
     {
-        return $this->connection->rollBack();
+        try {
+            return $this->connection->rollBack();
+        } catch (ConnectionException $e) {
+            throw $e;
+        }
     }
 }
