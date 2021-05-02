@@ -4,7 +4,7 @@ namespace SimpleBank\Application\Service\BankBranch;
 
 use SimpleBank\Domain\Model\User\UserBalanceRepositoryInterface;
 
-class BankBranchStats
+class BankBranchStatsService
 {
     private UserBalanceRepositoryInterface $userBalanceRepository;
 

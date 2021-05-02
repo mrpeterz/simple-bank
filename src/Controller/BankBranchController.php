@@ -3,8 +3,8 @@
 namespace SimpleBank\Controller;
 
 use SimpleBank\Application\DataTransformer\BankBranch\BankBranchDto;
-use SimpleBank\Application\Service\BankBranch\BankBranchFinder;
-use SimpleBank\Application\Service\BankBranch\CreateBankBranch;
+use SimpleBank\Application\Service\BankBranch\BankBranchFinderService;
+use SimpleBank\Application\Service\BankBranch\CreateBankBranchService;
 use SimpleBank\Controller\Form\BankBranchType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class BankBranchController extends AbstractController
 {
-    public function add(Request $request, CreateBankBranch $createUser): Response
+    public function add(Request $request, CreateBankBranchService $createBankBranchService): Response
     {
         $form = $this->createForm(BankBranchType::class);
 
@@ -22,14 +22,15 @@ class BankBranchController extends AbstractController
 
             $data = $form->getData();
 
-            $userDto = new BankBranchDto();
-            $userDto->setName($data['name']);
-            $userDto->setLocation($data['location']);
+            $bankBranchDto = new BankBranchDto();
+            $bankBranchDto->setName($data['name']);
+            $bankBranchDto->setLocation($data['location']);
 
-            if(!$createUser->save($userDto)) {
-                $this->addFlash('error', 'Problem with Bank Branch creation.');
-            }else{
+            try {
+                $createBankBranchService->save($bankBranchDto);
                 $this->addFlash('success', 'Bank Branch created.');
+            }catch (\Exception $exception) {
+                $this->addFlash('error', 'Problem with Bank Branch creation: ' . $exception->getMessage());
             }
         }
 
@@ -38,7 +39,7 @@ class BankBranchController extends AbstractController
         ]);
     }
 
-    public function list(BankBranchFinder $bankBranchFinder): Response
+    public function list(BankBranchFinderService $bankBranchFinder): Response
     {
         $items = $bankBranchFinder->listBankBranches();
 

@@ -3,13 +3,16 @@
 namespace SimpleBank\Application\Service\BankBranch;
 
 use SimpleBank\Application\DataTransformer\BankBranch\BankTransferDto;
+use SimpleBank\Application\Service\BankBranch\Exception\AmountNotPositiveException;
+use SimpleBank\Application\Service\BankBranch\Exception\BalanceNotSufficientException;
 use SimpleBank\Domain\Model\User\User;
 use SimpleBank\Domain\Model\User\UserBalanceRepositoryInterface;
 use SimpleBank\Domain\Model\User\UserId;
+use SimpleBank\Domain\Model\User\UserNotExistsException;
 use SimpleBank\Domain\Model\User\UserRepositoryInterface;
 use SimpleBank\Domain\Transactions;
 
-class BankTransferManager
+class BankBranchTransferService
 {
     private UserRepositoryInterface $userRepository;
     private UserBalanceRepositoryInterface $userBalancesRepository;
@@ -32,57 +35,51 @@ class BankTransferManager
         try{
 
             if ($bankTransferDto->amount() <= 0) {
-                throw new \Exception('Amount must be greater than 0.');
+                throw new AmountNotPositiveException('Amount must be greater than 0.');
             }
 
-            $userDtoFrom =
-                $this
-                    ->userRepository
-                    ->search(new UserId($bankTransferDto->fromUserId()));
-
-            if (!$userDtoFrom) {
-                throw new \Exception('User doesn\'t exist.');
-            }
-
-            $userFrom = User::fromArray($userDtoFrom);
+            $userFrom = $this->userFromRepository($bankTransferDto->fromUserId());
 
             if ($userFrom->userBalance()->balance() < $bankTransferDto->amount()) {
-                throw new \Exception('User balance is less than amount.');
+                throw new BalanceNotSufficientException('User balance is less than amount.');
             }
 
-            $userDtoTo =
-                $this
-                    ->userRepository
-                    ->search(new UserId($bankTransferDto->toUserId()));
+            $userTo = $this->userFromRepository($bankTransferDto->toUserId());
 
-            if (!$userDtoTo) {
-                throw new \Exception('User doesn\'t exist.');
-            }
-
-            $userTo = User::fromArray($userDtoTo);
-
-            $this
-                ->userBalancesRepository
-                ->updateBalance(
-                    $userFrom->updateBalance(
-                        $userFrom->userBalance()->balance() - $bankTransferDto->amount()
-                    )
-                );
-
-            $this
-                ->userBalancesRepository
-                ->updateBalance(
-                    $userTo->updateBalance(
-                        $userTo->userBalance()->balance() + $bankTransferDto->amount()
-                    )
-                );
+            $this->doWireTransfer($userFrom, $userTo, $bankTransferDto->amount());
 
             $this->transactionalManager->commit();
+
             return true;
 
         }catch (\Exception $exception) {
             $this->transactionalManager->rollBack();
             return false;
         }
+    }
+
+    private function doWireTransfer(
+        User $userFrom,
+        User $userTo,
+        float $amount
+    ): void {
+        $this->userBalancesRepository->updateBalance(
+            $userFrom->updateBalance($userFrom->userBalance()->balance() - $amount)
+        );
+
+        $this->userBalancesRepository->updateBalance(
+            $userTo->updateBalance($userTo->userBalance()->balance() + $amount)
+        );
+    }
+
+    private function userFromRepository(string $userId): User
+    {
+        $user = $this->userRepository->search(new UserId($userId));
+
+        if (!$user) {
+            throw new UserNotExistsException('User not exists.');
+        }
+
+        return User::fromArray($user);
     }
 }

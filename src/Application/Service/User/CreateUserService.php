@@ -9,7 +9,7 @@ use SimpleBank\Domain\Model\User\UserBalanceRepositoryInterface;
 use SimpleBank\Domain\Model\User\UserRepositoryInterface;
 use SimpleBank\Domain\Transactions;
 
-class CreateUser
+class CreateUserService
 {
     private UserRepositoryInterface $userRepository;
     private UserBalanceRepositoryInterface $userBalancesRepository;
@@ -30,10 +30,6 @@ class CreateUser
         $this->transactionalManager->beginTransaction();
 
         try {
-
-            if (!$userDto) {
-                throw new \Exception('Missing user informations.');
-            }
 
             $user = new User(
                 $this->userRepository->nextIdentity(),

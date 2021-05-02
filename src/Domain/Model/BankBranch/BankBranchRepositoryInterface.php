@@ -10,5 +10,7 @@ interface BankBranchRepositoryInterface
 
     public function search(BankBranchId $bankBranchId): ?array;
 
+    public function exists(BankBranch $bankBranch): bool;
+
     public function all(): ?array;
 }

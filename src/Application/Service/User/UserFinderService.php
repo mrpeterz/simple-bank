@@ -5,7 +5,7 @@ namespace SimpleBank\Application\Service\User;
 use SimpleBank\Domain\Model\User\UserId;
 use SimpleBank\Domain\Model\User\UserRepositoryInterface;
 
-class UserFinder
+class UserFinderService
 {
     private UserRepositoryInterface $userRepository;
 

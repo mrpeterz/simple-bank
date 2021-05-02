@@ -4,7 +4,7 @@ namespace SimpleBank\Application\Service\BankBranch;
 
 use SimpleBank\Domain\Model\BankBranch\BankBranchRepositoryInterface;
 
-class BankBranchFinder
+class BankBranchFinderService
 {
     private BankBranchRepositoryInterface $bankBranchRepository;
 

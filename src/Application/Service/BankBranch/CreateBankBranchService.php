@@ -4,10 +4,12 @@ namespace SimpleBank\Application\Service\BankBranch;
 
 use SimpleBank\Application\DataTransformer\BankBranch\BankBranchDto;
 use SimpleBank\Domain\Model\BankBranch\BankBranch;
+use SimpleBank\Domain\Model\BankBranch\BankBranchAlreadyExistsException;
+use SimpleBank\Domain\Model\BankBranch\BankBranchNotExistsException;
 use SimpleBank\Domain\Model\BankBranch\BankBranchRepositoryInterface;
 use SimpleBank\Domain\Transactions;
 
-class CreateBankBranch
+class CreateBankBranchService
 {
     private BankBranchRepositoryInterface $bankBranchRepository;
     private Transactions $transactionalManager;
@@ -22,30 +24,30 @@ class CreateBankBranch
 
     public function save(BankBranchDto $bankBranchDto): bool
     {
+        $bankBranch = new BankBranch(
+            $this->bankBranchRepository->nextIdentity(),
+            $bankBranchDto->name(),
+            $bankBranchDto->location()
+        );
+
+        if (!$bankBranch) {
+            throw new BankBranchNotExistsException('Bank branch cannot be null.');
+        }
+
+        if ($this->bankBranchRepository->exists($bankBranch)) {
+            throw new BankBranchAlreadyExistsException('Bank branch already exists.');
+        }
+
         $this->transactionalManager->beginTransaction();
 
         try{
-
-            if(!$bankBranchDto) {
-                throw new \Exception('Missing bank branch informations.');
-            }
-
-            $bankBranch = new BankBranch(
-                $this->bankBranchRepository->nextIdentity(),
-                $bankBranchDto->name(),
-                $bankBranchDto->location()
-            );
-
-            if(!$bankBranch) {
-                throw new \Exception('Bank branch cannot be null.');
-            }
 
             $this->bankBranchRepository->save($bankBranch);
             $this->transactionalManager->commit();
 
             return true;
 
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             $this->transactionalManager->rollBack();
             return false;
         }

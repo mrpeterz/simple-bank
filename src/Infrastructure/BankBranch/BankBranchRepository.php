@@ -36,6 +36,15 @@ class BankBranchRepository implements BankBranchRepositoryInterface
         return $rst->fetchAssociative();
     }
 
+    public function exists(BankBranch $bankBranch): bool
+    {
+        $stm = $this->connection->prepare("SELECT * FROM bank_branches b WHERE b.name = ? AND b.location = ?");
+        $stm->bindValue(1, $bankBranch->name());
+        $stm->bindValue(2, $bankBranch->location());
+        $rst = $stm->executeQuery();
+        return $rst->rowCount() > 0;
+    }
+
     public function all(): ?array
     {
         $stm = $this->connection->prepare(
@@ -50,4 +59,6 @@ class BankBranchRepository implements BankBranchRepositoryInterface
     {
         return new BankBranchId();
     }
+
+
 }

@@ -4,9 +4,9 @@ namespace SimpleBank\Controller;
 
 use SimpleBank\Application\DataTransformer\BankBranch\BankTransferDto;
 use SimpleBank\Application\DataTransformer\User\UserDto;
-use SimpleBank\Application\Service\BankBranch\BankTransferManager;
-use SimpleBank\Application\Service\User\CreateUser;
-use SimpleBank\Application\Service\User\UserFinder;
+use SimpleBank\Application\Service\BankBranch\BankBranchTransferService;
+use SimpleBank\Application\Service\User\CreateUserService;
+use SimpleBank\Application\Service\User\UserFinderService;
 use SimpleBank\Controller\Form\UserType;
 use SimpleBank\Controller\Form\WireTransferType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends AbstractController
 {
-    public function add(Request $request, CreateUser $createUser): Response
+    public function add(Request $request, CreateUserService $createUserService): Response
     {
         $form = $this->createForm(UserType::class);
 
@@ -32,7 +32,7 @@ class UserController extends AbstractController
             $userDto->setBalance($data['balance']);
             $userDto->setBankBranchId($bankBranchId);
 
-            if(!$createUser->save($userDto)) {
+            if(!$createUserService->save($userDto)) {
                 $this->addFlash('error', 'Problem with User creation.');
             }else{
                 $this->addFlash('success', 'User created.');
@@ -44,7 +44,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    public function list(UserFinder $userFinder): Response
+    public function list(UserFinderService $userFinder): Response
     {
         $items = $userFinder->listUsers();
 
@@ -53,7 +53,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    public function show(Request $request, UserFinder $userFinder): Response
+    public function show(Request $request, UserFinderService $userFinder): Response
     {
         $userId = $request->attributes->get('userId');
         $item = $userFinder->searchUsers($userId);
@@ -65,8 +65,8 @@ class UserController extends AbstractController
 
     public function wire(
         Request $request,
-        BankTransferManager $bankTransferManager,
-        UserFinder $userFinder
+        BankBranchTransferService $bankTransferManager,
+        UserFinderService $userFinder
     ): Response {
 
         $fromUserId = $request->attributes->get('userId');
