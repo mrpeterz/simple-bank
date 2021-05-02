@@ -2,10 +2,13 @@
 
 namespace SimpleBank\Controller;
 
+use SimpleBank\Application\DataTransformer\BankBranch\BankTransferDto;
 use SimpleBank\Application\DataTransformer\User\UserDto;
+use SimpleBank\Application\Service\BankBranch\BankTransferManager;
 use SimpleBank\Application\Service\User\CreateUser;
 use SimpleBank\Application\Service\User\UserFinder;
 use SimpleBank\Controller\Form\UserType;
+use SimpleBank\Controller\Form\WireTransferType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -57,6 +60,38 @@ class UserController extends AbstractController
 
         return $this->render('user\users_show.html.twig', [
             'item' => $item
+        ]);
+    }
+
+    public function wire(
+        Request $request,
+        BankTransferManager $bankTransferManager,
+        UserFinder $userFinder
+    ): Response {
+        $form = $this->createForm(WireTransferType::class, $userFinder->listUsers());
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $fromUserId = $request->attributes->get('userId');
+
+            $data = $form->getData();
+
+            $bankTransferDto = new BankTransferDto();
+            $bankTransferDto->setFromUserId($fromUserId);
+            $bankTransferDto->setToUserId($data['toUserId']);
+            $bankTransferDto->setAmount($data['amount']);
+
+            if(!$bankTransferManager->wireTransfer($bankTransferDto)) {
+                $this->addFlash('error', 'Problem with wire transfer.');
+            }else{
+                $this->addFlash('success', 'Wire transfer done.');
+            }
+        }
+
+        return $this->render('user/users_wire_transfer.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace SimpleBank\Application\Service\BankTransfer;
+namespace SimpleBank\Application\Service\BankBranch;
 
 use Doctrine\DBAL\Driver\Connection;
-use SimpleBank\Application\DataTransformer\BankTransfer\BankTransferDto;
+use SimpleBank\Application\DataTransformer\BankBranch\BankTransferDto;
 use SimpleBank\Domain\Model\User\User;
 use SimpleBank\Domain\Model\User\UserBalanceRepositoryInterface;
 use SimpleBank\Domain\Model\User\UserId;

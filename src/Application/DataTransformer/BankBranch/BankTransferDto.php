@@ -1,6 +1,6 @@
 <?php
 
-namespace SimpleBank\Application\DataTransformer\BankTransfer;
+namespace SimpleBank\Application\DataTransformer\BankBranch;
 
 use SimpleBank\Application\DataTransformer\Dto;
 

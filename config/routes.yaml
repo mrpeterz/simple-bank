@@ -26,3 +26,6 @@ stats:
   path: /stats
   controller: SimpleBank\Controller\StatsController::stats
 
+wire_transfer:
+  path: /users/wire_transfer/{userId}
+  controller: SimpleBank\Controller\UserController::wire

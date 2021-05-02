@@ -20,22 +20,15 @@
         <li><a href="/users">List Users Bank Branches</a></li>
         <li><a href="/stats">Stats Bank Branches</a></li>
     </ul>
-    <table>
-        <tr>
-            <td>user name</td>
-            <td>user balance</td>
-            <td>bank branch name</td>
-            <td>bank branch location</td>
-            <td>option</td>
-        </tr>
-        <tr>
-            <td>{{ item.user_name }}</td>
-            <td>{{ item.user_balance }}</td>
-            <td>{{ item.bank_branch_name }}</td>
-            <td>{{ item.bank_branch_location }}</td>
-            <td><a href="/users/wire_transfer/{{item.user_id}}">Wire Transfer</a></td>
-        </tr>
-    </table>
+        {{ form(form) }}
+
+        {% for label, messages in app.flashes(['success', 'error']) %}
+            {% for message in messages %}
+                <div class="flash-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
     {% endblock %}
 </body>
 </html>
