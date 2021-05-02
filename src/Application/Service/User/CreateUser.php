@@ -2,34 +2,38 @@
 
 namespace SimpleBank\Application\Service\User;
 
-use Doctrine\DBAL\Driver\Connection;
 use SimpleBank\Application\DataTransformer\User\UserDto;
 use SimpleBank\Domain\Model\BankBranch\BankBranchId;
 use SimpleBank\Domain\Model\User\User;
 use SimpleBank\Domain\Model\User\UserBalanceRepositoryInterface;
 use SimpleBank\Domain\Model\User\UserRepositoryInterface;
+use SimpleBank\Domain\Transactions;
 
 class CreateUser
 {
     private UserRepositoryInterface $userRepository;
     private UserBalanceRepositoryInterface $userBalancesRepository;
-    private Connection $connection;
+    private Transactions $transactionalManager;
 
     public function __construct(
         UserRepositoryInterface $userRepository,
         UserBalanceRepositoryInterface $userBalanceRepository,
-        Connection $connection
+        Transactions $transactionalManager
     ) {
         $this->userRepository = $userRepository;
         $this->userBalancesRepository = $userBalanceRepository;
-        $this->connection = $connection;
+        $this->transactionalManager = $transactionalManager;
     }
 
     public function save(UserDto $userDto): bool
     {
-        $this->connection->beginTransaction();
+        $this->transactionalManager->beginTransaction();
 
         try {
+
+            if (!$userDto) {
+                throw new \Exception('Missing user informations.');
+            }
 
             $user = new User(
                 $this->userRepository->nextIdentity(),
@@ -38,14 +42,18 @@ class CreateUser
                 $userDto->balance()
             );
 
+            if (!$user) {
+                throw new \Exception('User cannot be null.');
+            }
+
             $this->userRepository->save($user);
             $this->userBalancesRepository->save($user->userBalance());
 
-            $this->connection->commit();
+            $this->transactionalManager->commit();
             return true;
 
         }catch(\Exception $exception) {
-            $this->connection->rollBack();
+            $this->transactionalManager->rollBack();
             return false;
         }
     }
