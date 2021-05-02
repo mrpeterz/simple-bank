@@ -6,7 +6,7 @@ interface UserBalanceRepositoryInterface
 {
     public function save(UserBalance $userBalance): bool;
 
-    public function updateBalance(UserId $userId, float $balance): ?bool;
+    public function updateBalance(User $user): ?bool;
 
     public function searchByHighestBalance(): ?array;
 

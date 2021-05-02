@@ -31,13 +31,17 @@ class BankTransferManager
 
         try{
 
+            if ($bankTransferDto->amount() <= 0) {
+                throw new \Exception('Amount must be greater than 0.');
+            }
+
             $userDtoFrom =
                 $this
                     ->userRepository
                     ->search(new UserId($bankTransferDto->fromUserId()));
 
             if (!$userDtoFrom) {
-                throw new \Exception('User not exists.');
+                throw new \Exception('User doesn\'t exist.');
             }
 
             $userFrom = User::fromArray($userDtoFrom);
@@ -52,16 +56,26 @@ class BankTransferManager
                     ->search(new UserId($bankTransferDto->toUserId()));
 
             if (!$userDtoTo) {
-                throw new \Exception('User not exists.');
+                throw new \Exception('User doesn\'t exist.');
             }
 
             $userTo = User::fromArray($userDtoTo);
 
-            $amountUserFrom = $userFrom->userBalance()->balance() - $bankTransferDto->amount();
-            $amountUserTo = $userTo->userBalance()->balance() + $bankTransferDto->amount();
+            $this
+                ->userBalancesRepository
+                ->updateBalance(
+                    $userFrom->updateBalance(
+                        $userFrom->userBalance()->balance() - $bankTransferDto->amount()
+                    )
+                );
 
-            $this->userBalancesRepository->updateBalance($userFrom->id(), $amountUserFrom);
-            $this->userBalancesRepository->updateBalance($userTo->id(), $amountUserTo);
+            $this
+                ->userBalancesRepository
+                ->updateBalance(
+                    $userTo->updateBalance(
+                        $userTo->userBalance()->balance() + $bankTransferDto->amount()
+                    )
+                );
 
             $this->connection->commit();
             return true;

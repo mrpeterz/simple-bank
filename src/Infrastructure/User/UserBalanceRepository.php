@@ -3,9 +3,9 @@
 namespace SimpleBank\Infrastructure\User;
 
 use Doctrine\DBAL\Connection;
+use SimpleBank\Domain\Model\User\User;
 use SimpleBank\Domain\Model\User\UserBalance;
 use SimpleBank\Domain\Model\User\UserBalanceRepositoryInterface;
-use SimpleBank\Domain\Model\User\UserId;
 
 class UserBalanceRepository implements UserBalanceRepositoryInterface
 {
@@ -63,11 +63,11 @@ SQL
 
     }
 
-    public function updateBalance(UserId $userId, float $balance): ?bool
+    public function updateBalance(User $user): ?bool
     {
         $stm = $this->connection->prepare("UPDATE user_balances SET balance = ? WHERE user_id = ?");
-        $stm->bindValue(1, $balance);
-        $stm->bindValue(2, $userId->id());
+        $stm->bindValue(1, $user->userBalance()->balance());
+        $stm->bindValue(2, $user->id());
         return $stm->execute();
     }
 }
