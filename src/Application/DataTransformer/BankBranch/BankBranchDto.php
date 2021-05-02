@@ -2,6 +2,8 @@
 
 namespace SimpleBank\Application\DataTransformer\BankBranch;
 
+use SimpleBank\Application\DataTransformer\Dto;
+
 class BankBranchDto implements Dto
 {
     private string $name;

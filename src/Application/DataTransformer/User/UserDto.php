@@ -2,6 +2,8 @@
 
 namespace SimpleBank\Application\DataTransformer\User;
 
+use SimpleBank\Application\DataTransformer\Dto;
+
 class UserDto implements Dto
 {
     private string $name;
