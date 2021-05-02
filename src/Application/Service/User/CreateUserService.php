@@ -45,7 +45,7 @@ class CreateUserService
             $this->userRepository->save($user);
             $this->userBalancesRepository->save($user->userBalance());
 
-            return$this->transactionalManager->commit();
+            return $this->transactionalManager->commit();
 
         }catch(\Exception $exception) {
             $this->transactionalManager->rollBack();
