@@ -61,7 +61,7 @@ class BankTransferManager
             $amountUserTo = $userTo->userBalance()->balance() + $bankTransferDto->amount();
 
             $this->userBalancesRepository->updateBalance($userFrom->id(), $amountUserFrom);
-            $this->userBalancesRepository->updateBalance($userFrom->id(), $amountUserTo);
+            $this->userBalancesRepository->updateBalance($userTo->id(), $amountUserTo);
 
             $this->connection->commit();
             return true;
