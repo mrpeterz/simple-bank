@@ -100,7 +100,7 @@ SQL
             $stm = $this->connection->prepare(
                 <<<SQL
         SELECT 
-               u.name AS user_name,
+               CONCAT(u.name, ' [' ,u.id, ']') AS user_name,           
                u.id AS user_id 
         FROM users u
         WHERE u.id <> ?
@@ -115,3 +115,5 @@ SQL
         }
     }
 }
+
+//CONCAT(u.name, ' [' ,u.id, ']') AS user_name,

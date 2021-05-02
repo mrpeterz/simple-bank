@@ -85,7 +85,7 @@ class UserController extends AbstractController
 
             $bankTransferDto = new BankTransferDto();
             $bankTransferDto->setFromUserId($fromUserId);
-            $bankTransferDto->setToUserId($data['toUserId']);
+            $bankTransferDto->setToUserId($data['user']);
             $bankTransferDto->setAmount($data['amount']);
 
             try {
