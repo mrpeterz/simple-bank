@@ -11,4 +11,6 @@ interface UserRepositoryInterface
     public function search(UserId $userId): ?array;
 
     public function all(): ?array;
+
+    public function allOthers(UserId $userId): ?array;
 }

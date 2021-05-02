@@ -68,13 +68,16 @@ class UserController extends AbstractController
         BankTransferManager $bankTransferManager,
         UserFinder $userFinder
     ): Response {
-        $form = $this->createForm(WireTransferType::class, $userFinder->listUsers());
+
+        $fromUserId = $request->attributes->get('userId');
+
+        $users = $userFinder->listOtherUsers($fromUserId);
+
+        $form = $this->createForm(WireTransferType::class, $users);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $fromUserId = $request->attributes->get('userId');
 
             $data = $form->getData();
 

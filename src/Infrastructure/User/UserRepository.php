@@ -73,4 +73,20 @@ SQL
     {
         return new UserId();
     }
+
+    public function allOthers(UserId $userId): ?array
+    {
+        $stm = $this->connection->prepare(
+            <<<SQL
+        SELECT 
+               u.name AS user_name,
+               u.id AS user_id 
+        FROM users u
+        WHERE u.id <> ?
+SQL
+        );
+        $stm->bindValue(1, $userId->id());
+        $rst = $stm->executeQuery();
+        return $rst->fetchAllKeyValue();
+    }
 }

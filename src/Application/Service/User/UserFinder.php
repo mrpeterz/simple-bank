@@ -19,6 +19,11 @@ class UserFinder
         return $this->userRepository->all();
     }
 
+    public function listOtherUsers(string $userId): ?array
+    {
+        return $this->userRepository->allOthers(new UserId($userId));
+    }
+
     public function searchUsers(string $userId): ?array
     {
         return $this->userRepository->search(new UserId($userId));

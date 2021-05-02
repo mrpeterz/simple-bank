@@ -52,10 +52,10 @@ class User extends AggregateRoot
     public static function fromArray(array $user): User
     {
         return new self(
-            new UserId($user['id']),
-            $user['name'],
+            new UserId($user['user_id']),
+            $user['user_name'],
             new BankBranchId($user['bank_branch_id']),
-            $user['balance']
+            $user['user_balance']
         );
     }
 }

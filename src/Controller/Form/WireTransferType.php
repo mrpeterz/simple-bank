@@ -13,9 +13,8 @@ class WireTransferType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('user', ChoiceType::class)
+            ->add('toUserId', ChoiceType::class, ['choices' => $options['data']])
             ->add('amount', NumberType::class)
             ->add('Save', SubmitType::class);
     }
-
 }
