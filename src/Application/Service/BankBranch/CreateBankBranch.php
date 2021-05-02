@@ -42,7 +42,7 @@ class CreateBankBranch
 
             $this->bankBranchRepository->save($bankBranch);
             $this->transactionalManager->commit();
-            
+
             return true;
 
         }catch (\Exception $exception) {
