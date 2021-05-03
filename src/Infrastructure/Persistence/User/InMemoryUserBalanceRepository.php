@@ -1,8 +1,6 @@
 <?php
 
-
 namespace SimpleBank\Infrastructure\Persistence\User;
-
 
 use SimpleBank\Domain\Model\User\User;
 use SimpleBank\Domain\Model\User\UserBalance;
@@ -10,24 +8,27 @@ use SimpleBank\Domain\Model\User\UserBalanceRepositoryInterface;
 
 class InMemoryUserBalanceRepository implements UserBalanceRepositoryInterface
 {
+    /**
+     * @var UserBalance[]
+     */
+    private array $userBalances = array();
 
     public function save(UserBalance $userBalance): bool
     {
-        // TODO: Implement save() method.
+        $this->userBalances[] = $userBalance;
+        return true;
     }
 
-    public function updateBalance(User $user): ?bool
+    public function updateBalance(User $user): bool
     {
-        // TODO: Implement updateBalance() method.
-    }
+        foreach ($this->userBalances as $key => $userBalance) {
+            if ($userBalance->userId() === $user->id()
+            && $userBalance->bankBranchId() === $user->bankBranchId()) {
+                $this->userBalances[$key]->setBalance($user->userBalance()->balance());
+                return true;
+            }
+        }
 
-    public function searchByHighestBalance(): ?array
-    {
-        // TODO: Implement searchByHighestBalance() method.
-    }
-
-    public function searchByTopBankBranches(): ?array
-    {
-        // TODO: Implement searchByTopBankBranches() method.
+        return false;
     }
 }

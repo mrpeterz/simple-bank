@@ -61,13 +61,11 @@ class BankBranchTransferService
         User $userTo,
         float $amount
     ): void {
-        $this->userBalancesRepository->updateBalance(
-            $userFrom->updateBalance($userFrom->userBalance()->balance() - $amount)
-        );
+        $userFrom->setBalance($userFrom->userBalance()->balance() - $amount);
+        $this->userBalancesRepository->updateBalance($userFrom);
 
-        $this->userBalancesRepository->updateBalance(
-            $userTo->updateBalance($userTo->userBalance()->balance() + $amount)
-        );
+        $userTo->setBalance($userTo->userBalance()->balance() + $amount);
+        $this->userBalancesRepository->updateBalance($userTo);
     }
 
     private function userFromRepository(string $userId): User

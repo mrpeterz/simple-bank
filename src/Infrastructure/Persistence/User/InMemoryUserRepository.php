@@ -8,29 +8,50 @@ use SimpleBank\Domain\Model\User\UserRepositoryInterface;
 
 class InMemoryUserRepository implements UserRepositoryInterface
 {
+    /**
+     * @var User[]
+     */
+    private array $users = array();
 
     public function nextIdentity(): UserId
     {
-        // TODO: Implement nextIdentity() method.
+        return new UserId();
     }
 
     public function save(User $user): bool
     {
-        // TODO: Implement save() method.
+        $this->users[$user->id()->id()] = $user;
+        return array_key_exists($user->id()->id(), $this->users);
     }
 
     public function search(UserId $userId): ?array
     {
-        // TODO: Implement search() method.
+        $users = array();
+
+        foreach ($this->users as $user) {
+            if ($user->id()->equals($userId)) {
+                $users[] = $user;
+            }
+        }
+
+        return $users;
     }
 
     public function all(): ?array
     {
-        // TODO: Implement all() method.
+        return $this->users;
     }
 
     public function allOthers(UserId $userId): ?array
     {
-        // TODO: Implement allOthers() method.
+        $users = array();
+
+        foreach ($this->users as $user) {
+            if (!$user->id()->equals($userId)) {
+                $users[] = $user;
+            }
+        }
+
+        return $users;
     }
 }
