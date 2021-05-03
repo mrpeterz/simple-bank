@@ -4,6 +4,7 @@ namespace SimpleBank\Tests\Application;
 
 use SimpleBank\Application\DataTransformer\BankBranch\BankBranchDto;
 use SimpleBank\Application\Service\BankBranch\CreateBankBranchService;
+use SimpleBank\Domain\Model\BankBranch\BankBranchAlreadyExistsException;
 use SimpleBank\Domain\Model\BankBranch\BankBranchNotExistsException;
 use SimpleBank\Domain\Model\BankBranch\BankBranchRepositoryInterface;
 use SimpleBank\Domain\Transactions;
@@ -63,6 +64,39 @@ class CreateBankBranchServiceTest extends KernelTestCase
         );
 
         $createBankBranchService->save(new BankBranchDto());
+    }
+
+    public function testCreateBankBranchSaveThrowsExceptionWhenBankBranchAlreadyExists()
+    {
+        $this->expectException(BankBranchAlreadyExistsException::class);
+
+        $this->transactionManager
+            ->beginTransaction()
+            ->shouldBeCalledTimes(2);
+
+        $this->transactionManager
+            ->commit()
+            ->shouldBeCalledOnce();
+
+        $this->transactionManager
+            ->rollBack()
+            ->shouldBeCalledOnce();
+
+        $createBankBranchService = new CreateBankBranchService(
+            $this->bankBranchRepository,
+            $this->transactionManager->reveal()
+        );
+
+        $bankBranchDtoA =  new BankBranchDto();
+        $bankBranchDtoA->setName('Hugo Money Sl');
+        $bankBranchDtoA->setLocation('Zaragoza, Calle Caballo 7');
+
+        $bankBranchDtoB =  new BankBranchDto();
+        $bankBranchDtoB->setName('Hugo Money Sl');
+        $bankBranchDtoB->setLocation('Zaragoza, Calle Caballo 7');
+
+        $createBankBranchService->save($bankBranchDtoA);
+        $createBankBranchService->save($bankBranchDtoB);
     }
 
     public function getBankBranchesDto(): array
