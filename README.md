@@ -4,6 +4,20 @@ Simple-Bank is a PHP software for bank branches and customers
 
 ## Installation
 
+Requirements:
+
+php >=7.4
+
+```bash
+$  sudo apt -y install php7.4   
+```
+
+npm
+
+```bash
+$ sudo apt -y install npm
+```
+
 Download the repository:
 
 ```bash
@@ -12,6 +26,7 @@ $ git clone git@github.com:mrpeterz/simple-bank.git
 Install the php dependencies:
 
 ```bash
+$ cd simple-bank/
 $ composer install
 ```
 
@@ -45,6 +60,11 @@ $ cd simple-bank/
 $ symfony server:start
 ```
 
+Go to:
+
+```bash
+http://localhost:8000/
+```
 
 ## License
 Head Horse SL
