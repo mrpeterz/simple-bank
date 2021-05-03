@@ -25,7 +25,7 @@ class UserRepository implements UserRepositoryInterface
             $stm->bindValue(1, $user->id());
             $stm->bindValue(2, $user->name());
             $stm->bindValue(3, $user->bankBranchId());
-            return $stm->execute();
+            return $stm->executeStatement() > 0;
 
         }catch (Exception $exception) {
             throw $exception;

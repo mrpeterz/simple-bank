@@ -28,7 +28,7 @@ class BankBranchRepository implements BankBranchRepositoryInterface
             $stm->bindValue(2, $bankBranch->name());
             $stm->bindValue(3, $bankBranch->location());
 
-            return $stm->execute();
+            return $stm->executeStatement() > 0;
 
         } catch (Exception $e) {
             throw  $e;
