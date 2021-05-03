@@ -89,6 +89,29 @@ class CreateBankBranchServiceTest extends KernelTestCase
         $createBankBranchService->save($bankBranchDto);
     }
 
+    public function testCreateBankBranchSaveThrowsExceptionWhenEmptyLocationBankBranchDto()
+    {
+        $this->expectException(InvalidBankBranchException::class);
+
+        $this->transactionManager
+            ->beginTransaction()
+            ->shouldBeCalledOnce();
+
+        $this->transactionManager
+            ->rollBack()
+            ->shouldBeCalledOnce();
+
+        $createBankBranchService = new CreateBankBranchService(
+            $this->bankBranchRepository,
+            $this->transactionManager->reveal()
+        );
+
+        $bankBranchDto = new BankBranchDto();
+        $bankBranchDto->setName('test');
+
+        $createBankBranchService->save($bankBranchDto);
+    }
+
     public function testCreateBankBranchSaveThrowsExceptionWhenBankBranchAlreadyExists()
     {
         $this->expectException(BankBranchAlreadyExistsException::class);
