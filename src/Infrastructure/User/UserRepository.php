@@ -115,5 +115,3 @@ SQL
         }
     }
 }
-
-//CONCAT(u.name, ' [' ,u.id, ']') AS user_name,
