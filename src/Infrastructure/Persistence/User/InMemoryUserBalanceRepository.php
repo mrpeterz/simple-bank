@@ -1,7 +1,7 @@
 <?php
 
 
-namespace SimpleBank\Infrastructure\Persistance\User;
+namespace SimpleBank\Infrastructure\Persistence\User;
 
 
 use SimpleBank\Domain\Model\User\User;

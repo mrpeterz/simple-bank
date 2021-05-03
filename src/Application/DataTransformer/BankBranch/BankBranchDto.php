@@ -6,10 +6,10 @@ use SimpleBank\Application\DataTransformer\Dto;
 
 class BankBranchDto implements Dto
 {
-    private string $name;
-    private string $location;
+    private ?string $name = null;
+    private ?string $location = null;
 
-    public function name(): string
+    public function name(): ?string
     {
         return $this->name;
     }
@@ -19,7 +19,7 @@ class BankBranchDto implements Dto
         $this->name = $name;
     }
 
-    public function location(): string
+    public function location(): ?string
     {
         return $this->location;
     }

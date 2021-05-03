@@ -31,13 +31,13 @@ services:
     # please note that last definitions always *replace* previous ones
 
     SimpleBank\Domain\Model\User\UserRepositoryInterface:
-        class: 'SimpleBank\Infrastructure\Persistance\User\UserRepository'
+        class: 'SimpleBank\Infrastructure\Persistence\User\UserRepository'
 
     SimpleBank\Domain\Model\BankBranch\UserBalancesRepositoryInterface:
-        class: 'SimpleBank\Infrastructure\Persistance\User\UserBalancesRepository'
+        class: 'SimpleBank\Infrastructure\Persistence\User\UserBalancesRepository'
 
     SimpleBank\Domain\Model\BankBranch\BankBranchRepositoryInterface:
-        class: 'SimpleBank\Infrastructure\Persistance\BankBranch\BankBranchRepository'
+        class: 'SimpleBank\Infrastructure\Persistence\BankBranch\BankBranchRepository'
 
     SimpleBank\Domain\Transactions:
-        class: 'SimpleBank\Infrastructure\Persistance\TransactionalManager'
+        class: 'SimpleBank\Infrastructure\Persistence\TransactionalManager'

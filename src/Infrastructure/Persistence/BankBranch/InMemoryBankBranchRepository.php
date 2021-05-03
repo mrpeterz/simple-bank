@@ -1,6 +1,6 @@
 <?php
 
-namespace SimpleBank\Infrastructure\Persistance\BankBranch;
+namespace SimpleBank\Infrastructure\Persistence\BankBranch;
 
 use SimpleBank\Domain\Model\BankBranch\BankBranch;
 use SimpleBank\Domain\Model\BankBranch\BankBranchId;
@@ -21,15 +21,13 @@ class InMemoryBankBranchRepository implements BankBranchRepositoryInterface
     public function save(BankBranch $bankBranch): bool
     {
         $this->bankBranches[$bankBranch->id()->id()] = $bankBranch;
+        return array_key_exists($bankBranch->id()->id(), $this->bankBranches);
     }
 
     public function search(BankBranchId $bankBranchId): ?array
     {
         $bankBranches = array();
 
-        /**
-         * @var BankBranch $bankBranch
-         */
         foreach ($this->bankBranches as $bankBranch) {
             if ($bankBranch->id()->equals($bankBranchId)) {
                 $bankBranches[] = $bankBranch;
@@ -41,17 +39,19 @@ class InMemoryBankBranchRepository implements BankBranchRepositoryInterface
 
     public function exists(BankBranch $bankBranch): bool
     {
-        foreach ($this->bankBranches as $bankBranch) {
-            if ($bankBranch->name() == $bankBranch->) {
-                $bankBranches[] = $bankBranch;
+        foreach ($this->bankBranches as $item) {
+            if ($item->name() == $bankBranch->name() &&
+                $item->location() == $bankBranch->location()
+            ) {
+                return true;
             }
         }
 
-        return $bankBranches;
+        return false;
     }
 
     public function all(): ?array
     {
-        // TODO: Implement all() method.
+        return $this->bankBranches;
     }
 }

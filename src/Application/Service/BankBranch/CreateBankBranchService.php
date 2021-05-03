@@ -27,15 +27,16 @@ class CreateBankBranchService
         $this->transactionalManager->beginTransaction();
 
         try{
+
+            if (!$bankBranchDto->name() && !$bankBranchDto->location()) {
+                throw new BankBranchNotExistsException('Bank branch cannot be null.');
+            }
+
             $bankBranch = new BankBranch(
                 $this->bankBranchRepository->nextIdentity(),
                 $bankBranchDto->name(),
                 $bankBranchDto->location()
             );
-
-            if (!$bankBranch) {
-                throw new BankBranchNotExistsException('Bank branch cannot be null.');
-            }
 
             if ($this->bankBranchRepository->exists($bankBranch)) {
                 throw new BankBranchAlreadyExistsException('Bank branch already exists.');
