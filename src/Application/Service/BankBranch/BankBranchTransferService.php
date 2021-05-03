@@ -15,7 +15,7 @@ use SimpleBank\Domain\Transactions;
 class BankBranchTransferService
 {
     private UserRepositoryInterface $userRepository;
-    private UserBalanceRepositoryInterface $userBalancesRepository;
+    private UserBalanceRepositoryInterface $userBalanceRepository;
     private Transactions $transactionalManager;
 
     public function __construct(
@@ -24,7 +24,7 @@ class BankBranchTransferService
         Transactions $transactionalManager
     ) {
         $this->userRepository = $userRepository;
-        $this->userBalancesRepository = $userBalanceRepository;
+        $this->userBalanceRepository = $userBalanceRepository;
         $this->transactionalManager = $transactionalManager;
     }
 
@@ -62,10 +62,10 @@ class BankBranchTransferService
         float $amount
     ): void {
         $userFrom->setBalance($userFrom->userBalance()->balance() - $amount);
-        $this->userBalancesRepository->updateBalance($userFrom);
+        $this->userBalanceRepository->updateBalance($userFrom);
 
         $userTo->setBalance($userTo->userBalance()->balance() + $amount);
-        $this->userBalancesRepository->updateBalance($userTo);
+        $this->userBalanceRepository->updateBalance($userTo);
     }
 
     private function userFromRepository(string $userId): User

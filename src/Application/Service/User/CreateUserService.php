@@ -13,7 +13,7 @@ use SimpleBank\Domain\Transactions;
 class CreateUserService
 {
     private UserRepositoryInterface $userRepository;
-    private UserBalanceRepositoryInterface $userBalancesRepository;
+    private UserBalanceRepositoryInterface $userBalanceRepository;
     private Transactions $transactionalManager;
 
     public function __construct(
@@ -22,7 +22,7 @@ class CreateUserService
         Transactions $transactionalManager
     ) {
         $this->userRepository = $userRepository;
-        $this->userBalancesRepository = $userBalanceRepository;
+        $this->userBalanceRepository = $userBalanceRepository;
         $this->transactionalManager = $transactionalManager;
     }
 
@@ -43,7 +43,7 @@ class CreateUserService
             }
 
             $this->userRepository->save($user);
-            $this->userBalancesRepository->save($user->userBalance());
+            $this->userBalanceRepository->save($user->userBalance());
 
             return $this->transactionalManager->commit();
 

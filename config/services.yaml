@@ -33,8 +33,8 @@ services:
     SimpleBank\Domain\Model\User\UserRepositoryInterface:
         class: 'SimpleBank\Infrastructure\Persistence\User\UserRepository'
 
-    SimpleBank\Domain\Model\BankBranch\UserBalancesRepositoryInterface:
-        class: 'SimpleBank\Infrastructure\Persistence\User\UserBalancesRepository'
+    SimpleBank\Domain\Model\User\UserBalanceRepositoryInterface:
+        class: 'SimpleBank\Infrastructure\Persistence\User\UserBalanceRepository'
 
     SimpleBank\Domain\Model\BankBranch\BankBranchRepositoryInterface:
         class: 'SimpleBank\Infrastructure\Persistence\BankBranch\BankBranchRepository'
