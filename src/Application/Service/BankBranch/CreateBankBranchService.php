@@ -5,7 +5,7 @@ namespace SimpleBank\Application\Service\BankBranch;
 use SimpleBank\Application\DataTransformer\BankBranch\BankBranchDto;
 use SimpleBank\Domain\Model\BankBranch\BankBranch;
 use SimpleBank\Domain\Model\BankBranch\BankBranchAlreadyExistsException;
-use SimpleBank\Domain\Model\BankBranch\BankBranchNotExistsException;
+use SimpleBank\Domain\Model\BankBranch\InvalidBankBranchException;
 use SimpleBank\Domain\Model\BankBranch\BankBranchRepositoryInterface;
 use SimpleBank\Domain\Transactions;
 
@@ -28,8 +28,8 @@ class CreateBankBranchService
 
         try {
 
-            if (!$bankBranchDto->name() && !$bankBranchDto->location()) {
-                throw new BankBranchNotExistsException('Bank branch cannot be null.');
+            if (!$bankBranchDto->name() || !$bankBranchDto->location()) {
+                throw new InvalidBankBranchException('Bank branch information cannot be null.');
             }
 
             $bankBranch = new BankBranch(

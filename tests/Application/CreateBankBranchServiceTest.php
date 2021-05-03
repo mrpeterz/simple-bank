@@ -5,7 +5,7 @@ namespace SimpleBank\Tests\Application;
 use SimpleBank\Application\DataTransformer\BankBranch\BankBranchDto;
 use SimpleBank\Application\Service\BankBranch\CreateBankBranchService;
 use SimpleBank\Domain\Model\BankBranch\BankBranchAlreadyExistsException;
-use SimpleBank\Domain\Model\BankBranch\BankBranchNotExistsException;
+use SimpleBank\Domain\Model\BankBranch\InvalidBankBranchException;
 use SimpleBank\Domain\Model\BankBranch\BankBranchRepositoryInterface;
 use SimpleBank\Domain\Transactions;
 use SimpleBank\Infrastructure\Persistence\BankBranch\InMemoryBankBranchRepository;
@@ -48,7 +48,7 @@ class CreateBankBranchServiceTest extends KernelTestCase
 
     public function testCreateBankBranchSaveThrowsExceptionWhenEmptyBankBranchDto()
     {
-        $this->expectException(BankBranchNotExistsException::class);
+        $this->expectException(InvalidBankBranchException::class);
 
         $this->transactionManager
             ->beginTransaction()
@@ -64,6 +64,29 @@ class CreateBankBranchServiceTest extends KernelTestCase
         );
 
         $createBankBranchService->save(new BankBranchDto());
+    }
+
+    public function testCreateBankBranchSaveThrowsExceptionWhenEmptyNameBankBranchDto()
+    {
+        $this->expectException(InvalidBankBranchException::class);
+
+        $this->transactionManager
+            ->beginTransaction()
+            ->shouldBeCalledOnce();
+
+        $this->transactionManager
+            ->rollBack()
+            ->shouldBeCalledOnce();
+
+        $createBankBranchService = new CreateBankBranchService(
+            $this->bankBranchRepository,
+            $this->transactionManager->reveal()
+        );
+
+        $bankBranchDto = new BankBranchDto();
+        $bankBranchDto->setLocation('test');
+
+        $createBankBranchService->save($bankBranchDto);
     }
 
     public function testCreateBankBranchSaveThrowsExceptionWhenBankBranchAlreadyExists()
