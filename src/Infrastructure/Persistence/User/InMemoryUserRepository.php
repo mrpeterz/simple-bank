@@ -26,15 +26,20 @@ class InMemoryUserRepository implements UserRepositoryInterface
 
     public function search(UserId $userId): ?array
     {
-        $users = array();
+        $user = array();
 
-        foreach ($this->users as $user) {
-            if ($user->id()->equals($userId)) {
-                $users[] = $user;
+        foreach ($this->users as $u) {
+            if ($u->id()->equals($userId)) {
+                return $user = [
+                    'user_id' => $u->id()->id(),
+                    'user_name' => $u->name(),
+                    'bank_branch_id' => $u->bankBranchId()->id(),
+                    'user_balance' => $u->userBalance()->balance()
+                ];
             }
         }
 
-        return $users;
+        return $user;
     }
 
     public function all(): ?array

@@ -109,8 +109,6 @@ class BankBranchTransferServiceTest extends KernelTestCase
             )
         );
 
-        var_dump($this->userRepository->search($userTo->id()));
-
         $bankTransferDto = new BankTransferDto();
         $bankTransferDto->setFromUserId($userFrom->id());
         $bankTransferDto->setToUserId($userTo->id());

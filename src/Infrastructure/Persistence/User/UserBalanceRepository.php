@@ -25,7 +25,7 @@ class UserBalanceRepository implements UserBalanceRepositoryInterface
             $stm->bindValue(1, $userBalance->userId());
             $stm->bindValue(2, $userBalance->bankBranchId());
             $stm->bindValue(3, $userBalance->balance());
-            return $stm->execute();
+            return $stm->executeStatement() > 0;
 
         }catch (Exception $exception) {
             throw $exception;
@@ -41,7 +41,7 @@ class UserBalanceRepository implements UserBalanceRepositoryInterface
             SELECT 
                bb.name AS bank_branch_name,
                bb.location AS bank_branch_location,
-               ifnull(max(ub.balance),0) AS bank_branch_highest
+               ifnull(MAX(ub.balance),0) AS bank_branch_highest
             FROM bank_branches bb
             LEFT JOIN user_balances ub ON bb.id = ub.bank_branch_id
             LEFT JOIN users u ON bb.id = u.bank_branch_id AND ub.user_id = u.id
@@ -83,14 +83,14 @@ SQL
         }
     }
 
-    public function updateBalance(User $user): ?bool
+    public function updateBalance(User $user): bool
     {
         try {
 
             $stm = $this->connection->prepare("UPDATE user_balances SET balance = ? WHERE user_id = ?");
             $stm->bindValue(1, $user->userBalance()->balance());
             $stm->bindValue(2, $user->id());
-            return $stm->execute();
+            return $stm->executeStatement() > 0;
 
         }catch (Exception $e) {
             throw $e;

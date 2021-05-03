@@ -22,8 +22,9 @@ class InMemoryUserBalanceRepository implements UserBalanceRepositoryInterface
     public function updateBalance(User $user): bool
     {
         foreach ($this->userBalances as $key => $userBalance) {
-            if ($userBalance->userId() === $user->id()
-            && $userBalance->bankBranchId() === $user->bankBranchId()) {
+            if ($userBalance->userId()->equals($user->id()) &&
+                $userBalance->bankBranchId()->equals($user->bankBranchId())
+            ) {
                 $this->userBalances[$key]->setBalance($user->userBalance()->balance());
                 return true;
             }
