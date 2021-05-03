@@ -1,6 +1,6 @@
 <?php
 
-namespace SimpleBank\Infrastructure\User;
+namespace SimpleBank\Infrastructure\Persistance\User;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\Exception;

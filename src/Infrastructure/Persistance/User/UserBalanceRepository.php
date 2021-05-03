@@ -1,6 +1,6 @@
 <?php
 
-namespace SimpleBank\Infrastructure\User;
+namespace SimpleBank\Infrastructure\Persistance\User;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\Exception;
@@ -60,7 +60,7 @@ SQL
     public function searchByTopBankBranches(): ?array
     {
         try {
-            
+
             $stm = $this->connection->prepare(
                     <<<SQL
         SELECT 

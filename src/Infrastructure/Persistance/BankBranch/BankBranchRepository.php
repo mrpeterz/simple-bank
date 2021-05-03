@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace SimpleBank\Infrastructure\BankBranch;
+namespace SimpleBank\Infrastructure\Persistance\BankBranch;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\Exception;
