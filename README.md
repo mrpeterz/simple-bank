@@ -140,6 +140,10 @@ Run php migration:
 $ cd simple-bank/
 $ php bin/console doctrine:migrations:migrate
 ```
+Note: if drivers are missed execute:
+```
+sudo apt-get install php-mysql
+```
 Run symfony server:
 
 ```bash
