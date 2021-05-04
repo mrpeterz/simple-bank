@@ -35,7 +35,6 @@ class BankBranchTransferServiceTest extends KernelTestCase
         $this->userRepository = new InMemoryUserRepository();
         $this->userBalanceRepository = new InMemoryUserBalanceRepository();
         $this->bankBranchRepository = new InMemoryBankBranchRepository();
-
         $this->transactionManager = $this->prophesize(Transactions::class);
     }
 
@@ -115,7 +114,6 @@ class BankBranchTransferServiceTest extends KernelTestCase
         $bankTransferDto->setAmount(700);
 
         $this->assertTrue($bankBranchTransferService->wireTransfer($bankTransferDto));
-
         $this->assertEquals(0, $userFrom->userBalance()->balance());
         $this->assertEquals(1200, $userTo->userBalance()->balance());
     }

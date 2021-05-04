@@ -41,9 +41,7 @@ class User extends AggregateRoot
 
     public function setBalance(float $balance): void
     {
-        $this
-            ->userBalance()
-            ->setBalance($balance);
+        $this->userBalance()->setBalance($balance);
     }
 
     public function userBalance(): UserBalance
