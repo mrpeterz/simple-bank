@@ -14,15 +14,13 @@ Simple-Bank is a PHP software for bank branches and customers.
 
 :male_detective: Analysis implementation:
 
-The project follows `Domain Driven Design` principles and `Hexagonal Architecture` (port/adapter).
+The project follows `Domain Driven Design` / `Hexagonal Architecture` (port/adapter).
 
 :hammer_and_wrench: The domain entities are:
 
 * `User`
 * `User Balance`
 * `Bank Branch`
-
-The user was used as an aggregate root.
 
 Entities have the port to comunicate with the infrastructure and application layers:
 
