@@ -20,8 +20,10 @@
         <li><a href="/users">List Users Bank Branches</a></li>
         <li><a href="/stats">Stats Bank Branches</a></li>
     </ul>
+        <caption style="text-align:left"><b>Wire Transfer</b></caption>
         {{ form(form) }}
-
+        <br/>
+        <br/>
         {% for label, messages in app.flashes(['success', 'error']) %}
             {% for message in messages %}
                 <div class="flash-{{ label }}">
@@ -29,6 +31,44 @@
                 </div>
             {% endfor %}
         {% endfor %}
+        <br/>
+        <br/>
+        <table>
+            <caption style="text-align:left"><b>User Details From</b></caption>
+            <tr>
+                <td>Name</td>
+                <td>Balance</td>
+                <td>Bank Branch Name</td>
+                <td>Bank Branch Location</td>
+                <td>Option</td>
+            </tr>
+            <tr>
+                <td>{{ userFrom.user_name }}</td>
+                <td>{{ userFrom.user_balance }}</td>
+                <td>{{ userFrom.bank_branch_name }}</td>
+                <td>{{ userFrom.bank_branch_location }}</td>
+            </tr>
+        </table>
+        <br/>
+        <br/>
+        {% if userTo %}
+        <table>
+            <caption style="text-align:left"><b>User Details To</b></caption>
+            <tr>
+                <td>Name</td>
+                <td>Balance</td>
+                <td>Bank Branch Name</td>
+                <td>Bank Branch Location</td>
+                <td>Option</td>
+            </tr>
+            <tr>
+                <td>{{ userTo.user_name }}</td>
+                <td>{{ userTo.user_balance }}</td>
+                <td>{{ userTo.bank_branch_name }}</td>
+                <td>{{ userTo.bank_branch_location }}</td>
+            </tr>
+        </table>
+        {% endif %}
     {% endblock %}
 </body>
 </html>

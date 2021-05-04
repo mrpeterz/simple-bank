@@ -13,13 +13,14 @@
 </head>
 <body>
     {% block body %}
-    <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/bank_branches/add">Add Bank Branch</a></li>
-        <li><a href="/bank_branches">List Bank Branches</a></li>
-        <li><a href="/users">List Users Bank Branches</a></li>
-        <li><a href="/stats">Stats Bank Branches</a></li>
-    </ul>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/bank_branches/add">Add Bank Branch</a></li>
+            <li><a href="/bank_branches">List Bank Branches</a></li>
+            <li><a href="/users">List Users Bank Branches</a></li>
+            <li><a href="/stats">Stats Bank Branches</a></li>
+        </ul>
+        <caption style="text-align:left"><b>Add Bank Branches</b></caption>
         {{ form(form) }}
 
         {% for message in app.flashes('success') %}

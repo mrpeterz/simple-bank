@@ -81,6 +81,8 @@ class UserController extends AbstractController
 
         $form->handleRequest($request);
 
+        $userTo = null;
+
         if ($form->isSubmitted() && $form->isValid()) {
 
             $data = $form->getData();
@@ -90,6 +92,8 @@ class UserController extends AbstractController
             $bankTransferDto->setToUserId($data['user']);
             $bankTransferDto->setAmount($data['amount']);
 
+            $userTo = $userFinder->searchUser($bankTransferDto->toUserId());
+
             try {
                 $bankTransferManager->wireTransfer($bankTransferDto);
                 $this->addFlash('success', 'Wire transfer done.');
@@ -98,8 +102,13 @@ class UserController extends AbstractController
             }
         }
 
+        $userId = $request->attributes->get('userId');
+        $userFrom = $userFinder->searchUser($userId);
+
         return $this->render('user/users_wire_transfer.html.twig', [
             'form' => $form->createView(),
+            'userFrom' => $userFrom,
+            'userTo' => $userTo
         ]);
     }
 }
