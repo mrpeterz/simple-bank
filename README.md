@@ -109,6 +109,13 @@ Download the repository:
 ```bash
 $ git clone git@github.com:mrpeterz/simple-bank.git
 ```
+
+Install Symfony client:
+
+```
+wget https://get.symfony.com/cli/installer -O - | bash
+```
+
 Install the php dependencies:
 
 ```bash
@@ -143,12 +150,6 @@ $ php bin/console doctrine:migrations:migrate
 Note: if PDO drivers are missed execute:
 ```
 sudo apt-get install php-mysql
-```
-
-Install Symfony client:
-
-```
-wget https://get.symfony.com/cli/installer -O - | bash
 ```
 
 Run symfony server:
