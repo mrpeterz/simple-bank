@@ -10,10 +10,75 @@ Requirements:
 4. It should be possible to run the following two reports:
    a) Show all branches along with the highest balance at each branch. A branch with no customers should show 0 as the highest balance.
    b) List just those branches that have more than two customers with a balance over 50,000.
-   
-Analysis Implementation:
 
-The project try to follow the DDD principle.
+Analysis implementation:
+
+The project follows driven domain design principles and hexagonal architecture (port/adapter).
+
+The domain entities are:
+
+* User
+* User Balance
+* Bank Branch
+
+The user was used as an aggregate root.
+
+Entities have the port to comunicate with the infrastructure and application layers:
+
+* UserRepositoryInterface
+* UserBalanceRepositoryInterface
+* BankBranchRepositoryInterface
+* StatsRepositoryInterface
+
+The repositories implement the interfaces to ensure that contract between domain and business logic should be
+respected.
+
+There are the following entry points of the application:
+
+```
+index:
+path: /
+controller: SimpleBank\Controller\MainController::index
+
+bank_branches_list:
+path: /bank_branches
+controller: SimpleBank\Controller\BankBranchController::list
+
+bank_branches_add:
+path: /bank_branches/add
+controller: SimpleBank\Controller\BankBranchController::add
+
+users_list:
+path: /users
+controller: SimpleBank\Controller\UserController::list
+
+users_bank_branches_add:
+path: /users/bank_branches/{bankBranchId}
+controller: SimpleBank\Controller\UserController::add
+
+users_show:
+path: /users/{userId}
+controller: SimpleBank\Controller\UserController::show
+
+stats:
+path: /stats
+controller: SimpleBank\Controller\StatsController::stats
+
+wire_transfer:
+path: /users/wire_transfer/{userId}
+controller: SimpleBank\Controller\UserController::wire
+```
+
+For every use case, each controller communicates with the domain through
+the Application services. The information collected from the HTTP request
+is passed to a DTO and then to a Services.
+
+Every service was resolved by dependency injection.
+
+The persistence implementation was created without the ORM but using
+a database abstraction layer (DBAL).
+
+The tests cover the application services use cases.
 
 
 ## Installation
@@ -83,19 +148,28 @@ http://localhost:8000/
 Future Improvements:
 
 ```
-[] Add OAuth 
-[] Add/Improve API response
-[] Add Funcional tests
-[] Add Controller tests
-[] Wire transfers should be asynchronous
-[] Add Bus
-[] Using Fixtures for infrastructure tests
+[] Increase security layer with OAuth/JWT  
+[] Use CQRS to split read/write operations
+[] Using Command/Events
+[] Move Wire transfers to be asynchronous
+[] Implement a Wire transfer history for every wire transfer operations
+[] Add Bus in order to manage asynchronous processes
+[] Define real API contract
+[] Add/Improve API response to use JSON
 [] Improve UI/UX
 [] Improve form validations
 [] Improve server validations
 [] Improve exceptions handler
-[] Wire transfers should logged into a history table
-[] More...
+[] Add monitoring
+[] Use Value Object for Balance
+[] Add Funcional tests
+[] Add Controller tests
+[] Add Integration tests
+[] Add Aceptation tests
+[] Using Fixtures for infrastructure tests
+[] Use real web server like NGINX/Apache
+[] Use docker to create PHP, web-server containers
+[] More..
 ```
 
 ## License
