@@ -124,7 +124,7 @@ $ npm run dev
 Start MySQL instance:
 
 ```bash
-$ cd docker\
+$ cd simple-bank/docker/
 $ docker-compose -f docker-compose.dev.yml up --build
 ```
 Run php migration:
