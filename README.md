@@ -145,6 +145,13 @@ Go to:
 http://localhost:8000/
 ```
 
+Testing:
+
+```
+cd simple-bank/
+$ php ./vendor/bin/phpunit
+```
+
 Future Improvements:
 
 ```
