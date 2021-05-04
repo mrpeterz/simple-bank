@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimpleBank\Domain\Model\User;
 
 use SimpleBank\Domain\Model\BankBranch\BankBranchId;
@@ -55,7 +57,7 @@ class User extends AggregateRoot
             new UserId($user['user_id']),
             $user['user_name'],
             new BankBranchId($user['bank_branch_id']),
-            $user['user_balance']
+            (float)$user['user_balance']
         );
     }
 }

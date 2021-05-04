@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimpleBank\Controller;
 
 use SimpleBank\Application\DataTransformer\BankBranch\BankBranchDto;

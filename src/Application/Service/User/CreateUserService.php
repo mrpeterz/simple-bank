@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimpleBank\Application\Service\User;
 
 use SimpleBank\Application\DataTransformer\User\UserDto;

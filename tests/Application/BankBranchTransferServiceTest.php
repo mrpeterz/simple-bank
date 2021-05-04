@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimpleBank\Tests\Application;
 
 use SimpleBank\Application\DataTransformer\BankBranch\BankBranchDto;
@@ -98,8 +100,8 @@ class BankBranchTransferServiceTest extends KernelTestCase
         $this->userBalanceRepository->save($userTo->userBalance());
 
         $bankTransferDto = new BankTransferDto();
-        $bankTransferDto->setFromUserId($userFrom->id());
-        $bankTransferDto->setToUserId($userTo->id());
+        $bankTransferDto->setFromUserId($userFrom->id()->id());
+        $bankTransferDto->setToUserId($userTo->id()->id());
         $bankTransferDto->setAmount(700);
 
         $this->assertTrue($bankBranchTransferService->wireTransfer($bankTransferDto));
@@ -167,8 +169,8 @@ class BankBranchTransferServiceTest extends KernelTestCase
         $this->userBalanceRepository->save($userTo->userBalance());
 
         $bankTransferDto = new BankTransferDto();
-        $bankTransferDto->setFromUserId($userFrom->id());
-        $bankTransferDto->setToUserId($userTo->id());
+        $bankTransferDto->setFromUserId($userFrom->id()->id());
+        $bankTransferDto->setToUserId($userTo->id()->id());
         $bankTransferDto->setAmount(700);
 
         $bankBranchTransferService->wireTransfer($bankTransferDto);
@@ -234,8 +236,8 @@ class BankBranchTransferServiceTest extends KernelTestCase
         $this->userBalanceRepository->save($userTo->userBalance());
 
         $bankTransferDto = new BankTransferDto();
-        $bankTransferDto->setFromUserId($userFrom->id());
-        $bankTransferDto->setToUserId($userTo->id());
+        $bankTransferDto->setFromUserId($userFrom->id()->id());
+        $bankTransferDto->setToUserId($userTo->id()->id());
         $bankTransferDto->setAmount(-700);
 
         $bankBranchTransferService->wireTransfer($bankTransferDto);
