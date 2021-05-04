@@ -1,6 +1,20 @@
 # Simple-Bank
 
-Simple-Bank is a PHP software for bank branches and customers
+Simple-Bank is a PHP software for bank branches and customers.
+
+Requirements:
+
+1. It should be possible to add new branches.
+2. It should be possible to add new customers with a starting balance.
+3. It should be possible to transfer a sum of money between any two customers.
+4. It should be possible to run the following two reports:
+   a) Show all branches along with the highest balance at each branch. A branch with no customers should show 0 as the highest balance.
+   b) List just those branches that have more than two customers with a balance over 50,000.
+   
+Analysis Implementation:
+
+The project try to follow the DDD principle.
+
 
 ## Installation
 
@@ -64,6 +78,24 @@ Go to:
 
 ```bash
 http://localhost:8000/
+```
+
+Future Improvements:
+
+```
+[] Add OAuth 
+[] Add/Improve API response
+[] Add Funcional tests
+[] Add Controller tests
+[] Wire transfers should be asynchronous
+[] Add Bus
+[] Using Fixtures for infrastructure tests
+[] Improve UI/UX
+[] Improve form validations
+[] Improve server validations
+[] Improve exceptions handler
+[] Wire transfers should logged into a history table
+[] More...
 ```
 
 ## License
