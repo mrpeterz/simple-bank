@@ -8,6 +8,7 @@ use SimpleBank\Application\DataTransformer\BankBranch\BankTransferDto;
 use SimpleBank\Application\Service\BankBranch\Exception\InvalidArgumentBankTransferException;
 use SimpleBank\Application\Service\BankBranch\Exception\NegativeAmountException;
 use SimpleBank\Application\Service\BankBranch\Exception\InsufficientBalanceException;
+use SimpleBank\Domain\Model\User\InvalidUserException;
 use SimpleBank\Domain\Model\User\User;
 use SimpleBank\Domain\Model\User\UserBalanceRepositoryInterface;
 use SimpleBank\Domain\Model\User\UserId;
@@ -43,7 +44,6 @@ class BankBranchTransferService
             ) {
                 throw new InvalidArgumentBankTransferException('Bank transfer parameters cannot be null.');
             }
-
 
             if ($bankTransferDto->amount() <= 0) {
                 throw new NegativeAmountException('Amount must be greater than 0.');
@@ -84,7 +84,7 @@ class BankBranchTransferService
         $user = $this->userRepository->search(new UserId($userId));
 
         if (!$user) {
-            throw new NegativeBalanceException('User not exists.');
+            throw new InvalidUserException('User not exists.');
         }
 
         return User::fromArray($user);
