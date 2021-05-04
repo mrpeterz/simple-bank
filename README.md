@@ -1,8 +1,9 @@
-# Simple-Bank
+:credit_card: :moneybag: :money_with_wings: :dollar: # Simple-Bank 
+
 
 Simple-Bank is a PHP software for bank branches and customers.
 
-Requirements:
+:point_down: Requirements:
 
 1. It should be possible to add new branches.
 2. It should be possible to add new customers with a starting balance.
@@ -11,11 +12,11 @@ Requirements:
    * a) Show all branches along with the highest balance at each branch. A branch with no customers should show 0 as the highest balance.
    * b) List just those branches that have more than two customers with a balance over 50,000.
 
-Analysis implementation:
+:male_detective: Analysis implementation:
 
 The project follows driven domain design principles and hexagonal architecture (port/adapter).
 
-The domain entities are:
+:hammer_and_wrench: The domain entities are:
 
 * `User`
 * `User Balance`
