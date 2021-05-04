@@ -91,22 +91,10 @@ class BankBranchTransferServiceTest extends KernelTestCase
         );
 
         $this->userRepository->save($userFrom);
-        $this->userBalanceRepository->save(
-            new UserBalance(
-                $userFrom->id(),
-                $bankBranch->id(),
-                $userFrom->userBalance()->balance()
-            )
-        );
+        $this->userBalanceRepository->save($userFrom->userBalance());
 
         $this->userRepository->save($userTo);
-        $this->userBalanceRepository->save(
-            new UserBalance(
-                $userTo->id(),
-                $bankBranch->id(),
-                $userTo->userBalance()->balance()
-            )
-        );
+        $this->userBalanceRepository->save($userTo->userBalance());
 
         $bankTransferDto = new BankTransferDto();
         $bankTransferDto->setFromUserId($userFrom->id());
