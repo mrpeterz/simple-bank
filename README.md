@@ -79,6 +79,23 @@ a database abstraction layer (`DBAL`).
 
 The tests cover the application services use cases.
 
+----
+
+Use cases:
+
+* Add Bank Branch from main menu `Add Bank Branch`: 
+
+https://localhost:8000/bank_branches/add
+
+* Add User to Bank Branch from `Add User`:
+
+https://localhost:8000/bank_branches
+
+* Wire transfer from `Show User details` and then `Wire Transfer`:
+
+https://localhost:8000/users
+
+---
 
 ## Installation
 
