@@ -8,11 +8,11 @@ use SimpleBank\Application\DataTransformer\Dto;
 
 class BankTransferDto implements Dto
 {
-    private string $fromUserId;
-    private string $toUserId;
-    private float $amount;
+    private ?string $fromUserId = null;
+    private ?string $toUserId = null;
+    private ?float $amount = null;
 
-    public function fromUserId(): string
+    public function fromUserId(): ?string
     {
         return $this->fromUserId;
     }
@@ -22,7 +22,7 @@ class BankTransferDto implements Dto
         $this->fromUserId = $fromUserId;
     }
 
-    public function toUserId(): string
+    public function toUserId(): ?string
     {
         return $this->toUserId;
     }
@@ -32,7 +32,7 @@ class BankTransferDto implements Dto
         $this->toUserId = $toUserId;
     }
 
-    public function amount(): float
+    public function amount(): ?float
     {
         return $this->amount;
     }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SimpleBank\Application\Service\BankBranch;
 
 use SimpleBank\Application\DataTransformer\BankBranch\BankTransferDto;
+use SimpleBank\Application\Service\BankBranch\Exception\InvalidArgumentBankTransferException;
 use SimpleBank\Application\Service\BankBranch\Exception\NegativeAmountException;
 use SimpleBank\Application\Service\BankBranch\Exception\InsufficientBalanceException;
 use SimpleBank\Domain\Model\User\User;
@@ -35,6 +36,14 @@ class BankBranchTransferService
         $this->transactionalManager->beginTransaction();
 
         try{
+
+            if (!$bankTransferDto->toUserId() ||
+                !$bankTransferDto->fromUserId() ||
+                !$bankTransferDto->amount()
+            ) {
+                throw new InvalidArgumentBankTransferException('Bank transfer parameters cannot be null.');
+            }
+
 
             if ($bankTransferDto->amount() <= 0) {
                 throw new NegativeAmountException('Amount must be greater than 0.');

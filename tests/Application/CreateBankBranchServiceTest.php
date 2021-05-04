@@ -149,11 +149,11 @@ class CreateBankBranchServiceTest extends KernelTestCase
 
     public function getBankBranchesDto(): array
     {
-        $bankBranchDtoA =  new BankBranchDto();
+        $bankBranchDtoA = new BankBranchDto();
         $bankBranchDtoA->setName('Hugo Money Sl');
         $bankBranchDtoA->setLocation('Zaragoza, Calle Caballo 7');
 
-        $bankBranchDtoB =  new BankBranchDto();
+        $bankBranchDtoB = new BankBranchDto();
         $bankBranchDtoB->setName('Pietro Money Sl');
         $bankBranchDtoB->setLocation('Milano, Via Palmanova 131');
 

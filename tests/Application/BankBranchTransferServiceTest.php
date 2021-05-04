@@ -9,6 +9,7 @@ use SimpleBank\Application\DataTransformer\BankBranch\BankTransferDto;
 use SimpleBank\Application\DataTransformer\User\UserDto;
 use SimpleBank\Application\Service\BankBranch\BankBranchTransferService;
 use SimpleBank\Application\Service\BankBranch\Exception\InsufficientBalanceException;
+use SimpleBank\Application\Service\BankBranch\Exception\InvalidArgumentBankTransferException;
 use SimpleBank\Application\Service\BankBranch\Exception\NegativeAmountException;
 use SimpleBank\Domain\Model\BankBranch\BankBranch;
 use SimpleBank\Domain\Model\BankBranch\BankBranchId;
@@ -239,6 +240,70 @@ class BankBranchTransferServiceTest extends KernelTestCase
         $bankTransferDto->setFromUserId($userFrom->id()->id());
         $bankTransferDto->setToUserId($userTo->id()->id());
         $bankTransferDto->setAmount(-700);
+
+        $bankBranchTransferService->wireTransfer($bankTransferDto);
+    }
+
+    public function testBankBranchTransferServiceWithInvalidArgumentThrowException()
+    {
+        $this->expectException(InvalidArgumentBankTransferException::class);
+
+        $this->transactionManager
+            ->beginTransaction()
+            ->shouldBeCalledOnce();
+
+        $this->transactionManager
+            ->rollBack()
+            ->shouldBeCalledOnce();
+
+        $bankBranchTransferService = new BankBranchTransferService(
+            $this->userRepository,
+            $this->userBalanceRepository,
+            $this->transactionManager->reveal()
+        );
+
+        $bankBranchDto = new BankBranchDto();
+        $bankBranchDto->setName('hola');
+        $bankBranchDto->setLocation('zaragoza');
+
+        $bankBranch =
+            new BankBranch(
+                new BankBranchId(),
+                $bankBranchDto->name(),
+                $bankBranchDto->location()
+            );
+
+        $this->bankBranchRepository->save($bankBranch);
+
+        $userFromDto = new UserDto();
+        $userFromDto->setName('pippo');
+        $userFromDto->setBalance(700);
+
+        $userFrom = new User(
+            new UserId(),
+            $userFromDto->name(),
+            $bankBranch->id(),
+            $userFromDto->balance(),
+        );
+
+        $userToDto = new UserDto();
+        $userToDto->setName('pazzo');
+        $userToDto->setBalance(500);
+
+        $userTo = new User(
+            new UserId(),
+            $userToDto->name(),
+            $bankBranch->id(),
+            $userToDto->balance(),
+        );
+
+        $this->userRepository->save($userFrom);
+        $this->userBalanceRepository->save($userFrom->userBalance());
+
+        $this->userRepository->save($userTo);
+        $this->userBalanceRepository->save($userTo->userBalance());
+
+        $bankTransferDto = new BankTransferDto();
 
         $bankBranchTransferService->wireTransfer($bankTransferDto);
     }

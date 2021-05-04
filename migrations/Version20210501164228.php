@@ -14,7 +14,7 @@ final class Version20210501164228 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'create_user_balances';
+        return 'create_user_balances_table';
     }
 
     public function up(Schema $schema): void
