@@ -3,8 +3,8 @@
 namespace SimpleBank\Application\Service\BankBranch;
 
 use SimpleBank\Application\DataTransformer\BankBranch\BankTransferDto;
-use SimpleBank\Application\Service\BankBranch\Exception\NotPositiveAmountException;
-use SimpleBank\Application\Service\BankBranch\Exception\NotSufficientBalanceException;
+use SimpleBank\Application\Service\BankBranch\Exception\NegativeAmountException;
+use SimpleBank\Application\Service\BankBranch\Exception\InsufficientBalanceException;
 use SimpleBank\Domain\Model\User\User;
 use SimpleBank\Domain\Model\User\UserBalanceRepositoryInterface;
 use SimpleBank\Domain\Model\User\UserId;
@@ -35,13 +35,13 @@ class BankBranchTransferService
         try{
 
             if ($bankTransferDto->amount() <= 0) {
-                throw new NotPositiveAmountException('Amount must be greater than 0.');
+                throw new NegativeAmountException('Amount must be greater than 0.');
             }
 
             $userFrom = $this->userFromRepository($bankTransferDto->fromUserId());
 
             if ($userFrom->userBalance()->balance() < $bankTransferDto->amount()) {
-                throw new NotSufficientBalanceException('User balance is less than amount.');
+                throw new InsufficientBalanceException('User balance is less than amount.');
             }
 
             $userTo = $this->userFromRepository($bankTransferDto->toUserId());

@@ -2,6 +2,6 @@
 
 namespace SimpleBank\Application\Service\BankBranch\Exception;
 
-class NotSufficientBalanceException extends \Exception
+class InsufficientBalanceException extends \Exception
 {
 }
