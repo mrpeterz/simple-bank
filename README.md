@@ -96,6 +96,12 @@ npm
 $ sudo apt -y install npm
 ```
 
+Docker-composer
+
+```
+https://docs.docker.com/compose/install/
+```
+
 Download the repository:
 
 ```bash
