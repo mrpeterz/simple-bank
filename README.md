@@ -8,8 +8,8 @@ Requirements:
 2. It should be possible to add new customers with a starting balance.
 3. It should be possible to transfer a sum of money between any two customers.
 4. It should be possible to run the following two reports:
-   a) Show all branches along with the highest balance at each branch. A branch with no customers should show 0 as the highest balance.
-   b) List just those branches that have more than two customers with a balance over 50,000.
+   * a) Show all branches along with the highest balance at each branch. A branch with no customers should show 0 as the highest balance.
+   * b) List just those branches that have more than two customers with a balance over 50,000.
 
 Analysis implementation:
 
@@ -17,18 +17,18 @@ The project follows driven domain design principles and hexagonal architecture (
 
 The domain entities are:
 
-* User
-* User Balance
-* Bank Branch
+* `User`
+* `User Balance`
+* `Bank Branch`
 
 The user was used as an aggregate root.
 
 Entities have the port to comunicate with the infrastructure and application layers:
 
-* UserRepositoryInterface
-* UserBalanceRepositoryInterface
-* BankBranchRepositoryInterface
-* StatsRepositoryInterface
+* `UserRepositoryInterface`
+* `UserBalanceRepositoryInterface`
+* `BankBranchRepositoryInterface`
+* `StatsRepositoryInterface`
 
 The repositories implement the interfaces to ensure that contract between domain and business logic should be
 respected.
@@ -76,7 +76,7 @@ is passed to a DTO and then to a Services.
 Every service was resolved by dependency injection.
 
 The persistence implementation was created without the ORM but using
-a database abstraction layer (DBAL).
+a database abstraction layer (`DBAL`).
 
 The tests cover the application services use cases.
 
