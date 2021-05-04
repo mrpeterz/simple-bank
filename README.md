@@ -1,5 +1,5 @@
-:credit_card: :moneybag: :money_with_wings: :dollar: # Simple-Bank 
-
+# Simple-Bank 
+:credit_card: :moneybag: :money_with_wings: :dollar:
 
 Simple-Bank is a PHP software for bank branches and customers.
 
