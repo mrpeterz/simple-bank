@@ -96,10 +96,12 @@ npm
 $ sudo apt -y install npm
 ```
 
-Docker-composer
+Docker-compose (https://docs.docker.com/compose/install/)
 
 ```
-https://docs.docker.com/compose/install/
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 ```
 
 Download the repository:
@@ -135,6 +137,7 @@ $ docker-compose -f docker-compose.dev.yml up --build
 Run php migration:
 
 ```bash
+$ cd simple-bank/
 $ php bin/console doctrine:migrations:migrate
 ```
 Run symfony server:
