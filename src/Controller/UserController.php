@@ -58,7 +58,7 @@ class UserController extends AbstractController
     public function show(Request $request, UserFinderService $userFinder): Response
     {
         $userId = $request->attributes->get('userId');
-        $item = $userFinder->searchUsers($userId);
+        $item = $userFinder->searchUser($userId);
 
         return $this->render('user\users_show.html.twig', [
             'item' => $item
