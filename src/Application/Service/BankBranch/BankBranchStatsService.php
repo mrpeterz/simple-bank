@@ -2,24 +2,24 @@
 
 namespace SimpleBank\Application\Service\BankBranch;
 
-use SimpleBank\Domain\Model\User\UserBalanceRepositoryInterface;
+use SimpleBank\Domain\Model\BankBranch\StatsRepositoryInterface;
 
 class BankBranchStatsService
 {
-    private UserBalanceRepositoryInterface $userBalanceRepository;
+    private StatsRepositoryInterface $statsRepository;
 
-    public function __construct(UserBalanceRepositoryInterface $userBalanceRepository)
+    public function __construct(StatsRepositoryInterface $statsRepository)
     {
-        $this->userBalanceRepository = $userBalanceRepository;
+        $this->statsRepository = $statsRepository;
     }
 
     public function highestBalances(): ?array
     {
-        return $this->userBalanceRepository->searchByHighestBalance();
+        return $this->statsRepository->searchByHighestBalance();
     }
 
     public function topBankBranches(): ?array
     {
-        return $this->userBalanceRepository->searchByTopBankBranches();
+        return $this->statsRepository->searchByTopBankBranches();
     }
 }
