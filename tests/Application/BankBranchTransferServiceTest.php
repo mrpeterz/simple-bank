@@ -12,7 +12,6 @@ use SimpleBank\Domain\Model\BankBranch\BankBranch;
 use SimpleBank\Domain\Model\BankBranch\BankBranchId;
 use SimpleBank\Domain\Model\BankBranch\BankBranchRepositoryInterface;
 use SimpleBank\Domain\Model\User\User;
-use SimpleBank\Domain\Model\User\UserBalance;
 use SimpleBank\Domain\Model\User\UserBalanceRepositoryInterface;
 use SimpleBank\Domain\Model\User\UserId;
 use SimpleBank\Domain\Model\User\UserRepositoryInterface;

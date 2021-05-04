@@ -8,7 +8,7 @@ use SimpleBank\Application\Service\BankBranch\Exception\InsufficientBalanceExcep
 use SimpleBank\Domain\Model\User\User;
 use SimpleBank\Domain\Model\User\UserBalanceRepositoryInterface;
 use SimpleBank\Domain\Model\User\UserId;
-use SimpleBank\Domain\Model\User\UserNotExistsException;
+use SimpleBank\Domain\Model\User\NegativeBalanceException;
 use SimpleBank\Domain\Model\User\UserRepositoryInterface;
 use SimpleBank\Domain\Transactions;
 
@@ -73,7 +73,7 @@ class BankBranchTransferService
         $user = $this->userRepository->search(new UserId($userId));
 
         if (!$user) {
-            throw new UserNotExistsException('User not exists.');
+            throw new NegativeBalanceException('User not exists.');
         }
 
         return User::fromArray($user);

@@ -2,6 +2,6 @@
 
 namespace SimpleBank\Domain\Model\User;
 
-class UserNotExistsException extends \Exception
+class NegativeBalanceException extends \Exception
 {
 }

@@ -8,6 +8,9 @@ use SimpleBank\Domain\Model\BankBranch\BankBranchRepositoryInterface;
 
 class InMemoryBankBranchRepository implements BankBranchRepositoryInterface
 {
+    /**
+     * @var BankBranch[]
+     */
     private array $bankBranches = array();
 
     public function nextIdentity(): BankBranchId
@@ -23,15 +26,19 @@ class InMemoryBankBranchRepository implements BankBranchRepositoryInterface
 
     public function search(BankBranchId $bankBranchId): ?array
     {
-        $bankBranches = array();
+        $bankBranch = array();
 
         foreach ($this->bankBranches as $bankBranch) {
             if ($bankBranch->id()->equals($bankBranchId)) {
-                return $bankBranch;
+                return $bankBranch = [
+                    'bank_branch_id' => $bankBranch->id(),
+                    'bank_branch_name' => $bankBranch->name(),
+                    'bank_branch_location' => $bankBranch->location()
+                ];
             }
         }
 
-        return $bankBranches;
+        return $bankBranch;
     }
 
     public function exists(BankBranch $bankBranch): bool

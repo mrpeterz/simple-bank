@@ -4,9 +4,10 @@ namespace SimpleBank\Application\Service\User;
 
 use SimpleBank\Application\DataTransformer\User\UserDto;
 use SimpleBank\Domain\Model\BankBranch\BankBranchId;
+use SimpleBank\Domain\Model\User\InvalidUserException;
 use SimpleBank\Domain\Model\User\User;
 use SimpleBank\Domain\Model\User\UserBalanceRepositoryInterface;
-use SimpleBank\Domain\Model\User\UserNotExistsException;
+use SimpleBank\Domain\Model\User\NegativeBalanceException;
 use SimpleBank\Domain\Model\User\UserRepositoryInterface;
 use SimpleBank\Domain\Transactions;
 
@@ -31,16 +32,20 @@ class CreateUserService
         $this->transactionalManager->beginTransaction();
 
         try {
+            if ($userDto->balance() < 0) {
+                throw new NegativeBalanceException('Balance must be positive.');
+            }
+
+            if (!$userDto->name()) {
+                throw new InvalidUserException('Invalid info');
+            }
+
             $user = new User(
                 $this->userRepository->nextIdentity(),
                 $userDto->name(),
                 new BankBranchId($userDto->bankBranchId()),
                 $userDto->balance()
             );
-
-            if (!$user) {
-                throw new UserNotExistsException('User cannot be null.');
-            }
 
             $this->userRepository->save($user);
             $this->userBalanceRepository->save($user->userBalance());
